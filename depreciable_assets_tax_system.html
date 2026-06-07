@@ -44,6 +44,7 @@
         radial-gradient(circle at 80% 10%, rgba(158,179,195,.45), transparent 28rem),
         linear-gradient(145deg, #edf2f5, #f8fafb);
     }
+    .auth-gate[hidden] { display: none !important; }
     .auth-card {
       width: min(430px, 100%); padding: 30px; border: 1px solid var(--line);
       border-radius: 24px; background: rgba(255,255,255,.94); box-shadow: var(--shadow);
@@ -678,6 +679,7 @@
           sessionStorage.removeItem(tokenKey);
           throw new Error("このIDには利用権限がありません。");
         }
+        message.textContent = "";
         document.body.classList.remove("auth-locked");
         gate.hidden = true;
       }
