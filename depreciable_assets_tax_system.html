@@ -57,7 +57,13 @@
       background: var(--green-dark); color: white; font-weight: 800;
     }
     .auth-submit:disabled { cursor: wait; opacity: .6; }
-    .auth-message { min-height: 20px; margin-top: 12px; color: var(--red); font-size: 11px; }
+    .auth-message {
+      min-height: 20px; margin-top: 12px; padding: 0; color: var(--red);
+      font-size: 12px; font-weight: 800; line-height: 1.5;
+    }
+    .auth-message:not(:empty) {
+      padding: 9px 11px; border: 1px solid #e4b4b4; border-radius: 10px; background: #fff1f1;
+    }
     .logout-button {
       border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px;
       background: white; color: var(--muted); font-size: 10px; font-weight: 800;
@@ -681,7 +687,18 @@
           cache: "no-store"
         });
         const result = await response.json();
-        if (!response.ok) throw new Error("IDまたはパスワードが正しくありません。");
+        if (!response.ok) {
+          const code = result.error?.message || "UNKNOWN";
+          const messages = {
+            INVALID_LOGIN_CREDENTIALS: "IDまたはパスワードが一致しません。FirebaseのAuthentication → Usersで、このメールアドレスが登録されているか確認してください。",
+            EMAIL_NOT_FOUND: "このIDはFirebase Authenticationに登録されていません。",
+            INVALID_PASSWORD: "パスワードが正しくありません。",
+            USER_DISABLED: "このIDはFirebase側で無効化されています。",
+            OPERATION_NOT_ALLOWED: "Firebaseで「メール／パスワード」認証が有効になっていません。",
+            TOO_MANY_ATTEMPTS_TRY_LATER: "ログイン試行回数が多いため、一時的に制限されています。しばらく待ってから再試行してください。"
+          };
+          throw new Error(messages[code] || `Firebase認証エラー: ${code}`);
+        }
         return result;
       }
 
