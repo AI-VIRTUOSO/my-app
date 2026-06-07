@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src http://127.0.0.1:8765 https://identitytoolkit.googleapis.com; frame-src municipality-tax-service:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src https://identitytoolkit.googleapis.com; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>自治体別償却資産申告支援システム</title>
   <style>
     :root {
@@ -395,7 +395,7 @@
     <div class="topbar-tools">
       <div class="municipality-compact" aria-label="資産所在地の自治体と税率">
         <input id="municipality" value="埼玉県越谷市" placeholder="資産所在地の自治体" aria-label="資産所在地の自治体" title="資産所在地の自治体。検索時は入力した自治体名を第三者検索サービスと自治体公式サイトへ送信します">
-        <button class="lookup-button" id="lookupTaxRate" type="button">公式サイトから税率取得</button>
+        <button class="lookup-button" id="lookupTaxRate" type="button">公式税率を確認・設定</button>
         <div class="lookup-status success" id="lookupStatus" title="越谷市公式情報に基づく固定資産税率1.4％を使用しています。">越谷市公式情報に基づく固定資産税率1.4％を使用しています。</div>
       </div>
       <div class="action-group">
@@ -658,6 +658,27 @@
     </div>
   </dialog>
 
+  <dialog class="form-dialog" id="webTaxRateDialog">
+    <div class="dialog-head">
+      <div><h2>自治体公式税率の確認・設定</h2><p>Web公開版では、自治体公式ページで税率を確認して入力します。</p></div>
+      <button class="dialog-close" id="closeWebTaxRateDialog" type="button" aria-label="閉じる">×</button>
+    </div>
+    <div class="dialog-body">
+      <div class="official-form-note">検索結果ではなく、必ず自治体公式サイトに記載された固定資産税率を確認してください。標準税率は1.4％ですが、自治体により異なる場合があります。</div>
+      <div class="document-form-grid">
+        <div class="field full"><label for="webMunicipalityName">確認した自治体名</label><input id="webMunicipalityName"></div>
+        <div class="field"><label for="webTaxRatePercent">固定資産税率（％）</label><input id="webTaxRatePercent" type="number" min="0.1" max="5" step="0.0001" value="1.4"></div>
+        <div class="field"><label for="webTaxRateYear">確認した適用年度</label><input id="webTaxRateYear" placeholder="例：令和9年度"></div>
+        <div class="field full"><label for="webTaxRateSource">自治体公式ページURL</label><input id="webTaxRateSource" type="url" placeholder="https://自治体公式サイト/..."></div>
+        <div class="field full"><button class="lookup-button" id="openMunicipalitySearch" type="button">自治体公式サイトをWeb検索する</button></div>
+      </div>
+      <div class="dialog-actions">
+        <button class="secondary" id="cancelWebTaxRateDialog" type="button">閉じる</button>
+        <button class="primary" id="applyWebTaxRate" type="button">確認した税率を適用</button>
+      </div>
+    </div>
+  </dialog>
+
   <script src="auth-config.js"></script>
   <script>
     (() => {
@@ -785,7 +806,6 @@
     let municipalityName = "埼玉県越谷市";
     let taxRateSource = "https://www.city.koshigaya.saitama.jp/kurashi_shisei/kurashi/zeikin/koteisisan_tosikeikaku/shisanzei.html";
     let municipalityVerified = true;
-    const LOCAL_SERVICE_TOKEN = "KZ-asset-tax-2026-7f3d9a2c";
     const THRESHOLD = 1500000;
     let targetYear = getDefaultTargetYear();
     const OFFICIAL_FORMS_URL = "https://www.city.koshigaya.saitama.jp/kurashi_shisei/kurashi/zeikin/download/kotei_shinseisho.html";
@@ -874,6 +894,10 @@
       document.querySelector("#officialDocumentForm").addEventListener("submit", createOfficialFormDocument);
       document.querySelector("#lookupTaxRate").addEventListener("click", lookupMunicipalityTaxRate);
       document.querySelector("#municipality").addEventListener("input", updateMunicipalityTitle);
+      document.querySelector("#closeWebTaxRateDialog").addEventListener("click", closeWebTaxRateDialog);
+      document.querySelector("#cancelWebTaxRateDialog").addEventListener("click", closeWebTaxRateDialog);
+      document.querySelector("#openMunicipalitySearch").addEventListener("click", openMunicipalitySearch);
+      document.querySelector("#applyWebTaxRate").addEventListener("click", applyWebTaxRate);
       syncLife();
       updateOfficialFormGuide();
       render();
@@ -888,78 +912,63 @@
       }
     }
 
-    async function lookupMunicipalityTaxRate() {
-      const input = document.querySelector("#municipality");
-      const button = document.querySelector("#lookupTaxRate");
-      const status = document.querySelector("#lookupStatus");
-      const requestedMunicipality = input.value.trim();
+    function lookupMunicipalityTaxRate() {
+      const requestedMunicipality = document.querySelector("#municipality").value.trim();
       if (!requestedMunicipality) {
         setLookupStatus("自治体名を入力してください。", "error");
         return;
       }
-
-      button.disabled = true;
-      status.className = "lookup-status";
-      status.textContent = `${requestedMunicipality}の公式情報を検索しています...`;
-      try {
-        let result;
-        try {
-          result = await fetchMunicipalityTaxRate(requestedMunicipality);
-        } catch (firstError) {
-          if (firstError.isApiError) throw firstError;
-          status.textContent = "自治体税率検索サービスを起動しています。初回はブラウザの確認画面で「開く」を選択してください...";
-          launchTaxRateService();
-          await new Promise(resolve => setTimeout(resolve, 2500));
-          result = await fetchMunicipalityTaxRate(requestedMunicipality);
-        }
-        if (!Number.isFinite(result.ratePercent) || result.ratePercent <= 0 || result.ratePercent > 5) {
-          throw new Error("取得した税率が妥当な範囲外です。");
-        }
-        const verifiedSource = safeOfficialUrl(result.sourceUrl);
-        if (!verifiedSource) throw new Error("参照元URLが公式自治体サイトとして検証できませんでした。");
-        municipalityName = result.municipality;
-        municipalityVerified = true;
-        input.value = municipalityName;
-        taxRate = result.ratePercent / 100;
-        taxRateSource = verifiedSource;
-        document.querySelector("#officialLink").href = taxRateSource;
-        setLookupStatus(
-          `${municipalityName}の固定資産税率 ${formatTaxRate()}％を公式ページで確認しました。`,
-          "success",
-          taxRateSource
-        );
-        render();
-      } catch (error) {
-        const suffix = error.isApiError
-          ? "少し時間を置いて再試行してください。直近に取得済みの自治体はキャッシュから表示されます。"
-          : "自動起動できない場合は「自治体税率検索サービス自動起動.cmd」を一度実行してください。";
-        setLookupStatus(`${error.message} ${suffix}`, "error");
-      } finally {
-        button.disabled = false;
-      }
+      openWebTaxRateDialog();
     }
 
-    async function fetchMunicipalityTaxRate(municipality) {
-      const response = await fetch(`http://127.0.0.1:8765/tax-rate?municipality=${encodeURIComponent(municipality)}`, {
-        method: "GET",
-        headers: { "X-App-Token": LOCAL_SERVICE_TOKEN },
-        cache: "no-store"
-      });
-      const result = await response.json();
-      if (!response.ok || !result.success) {
-        const error = new Error(result.error || "税率を確認できませんでした。");
-        error.isApiError = true;
-        throw error;
-      }
-      return result;
+    function openWebTaxRateDialog() {
+      const municipality = document.querySelector("#municipality").value.trim();
+      document.querySelector("#webMunicipalityName").value = municipality;
+      document.querySelector("#webTaxRatePercent").value = formatTaxRate();
+      document.querySelector("#webTaxRateYear").value = `令和${targetYear - 2018}年度`;
+      document.querySelector("#webTaxRateSource").value = safeOfficialUrl(taxRateSource) || "";
+      document.querySelector("#webTaxRateDialog").showModal();
     }
 
-    function launchTaxRateService() {
-      const launcher = document.createElement("iframe");
-      launcher.hidden = true;
-      launcher.src = "municipality-tax-service://start";
-      document.body.appendChild(launcher);
-      setTimeout(() => launcher.remove(), 3000);
+    function closeWebTaxRateDialog() {
+      document.querySelector("#webTaxRateDialog").close();
+    }
+
+    function openMunicipalitySearch() {
+      const municipality = document.querySelector("#webMunicipalityName").value.trim();
+      if (!municipality) {
+        alert("自治体名を入力してください。");
+        return;
+      }
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(`${municipality} 固定資産税 税率 site:lg.jp`)}`, "_blank", "noopener,noreferrer");
+    }
+
+    function applyWebTaxRate() {
+      const municipality = document.querySelector("#webMunicipalityName").value.trim();
+      const ratePercent = Number(document.querySelector("#webTaxRatePercent").value);
+      const source = safeOfficialUrl(document.querySelector("#webTaxRateSource").value.trim());
+      const confirmedYear = document.querySelector("#webTaxRateYear").value.trim();
+      if (!municipality) {
+        alert("確認した自治体名を入力してください。");
+        return;
+      }
+      if (!Number.isFinite(ratePercent) || ratePercent <= 0 || ratePercent > 5) {
+        alert("固定資産税率を0より大きく5以下の数値で入力してください。");
+        return;
+      }
+      if (!source) {
+        alert("自治体公式サイトのHTTPS URLを入力してください。");
+        return;
+      }
+      municipalityName = municipality;
+      municipalityVerified = true;
+      taxRate = ratePercent / 100;
+      taxRateSource = source;
+      document.querySelector("#municipality").value = municipalityName;
+      document.querySelector("#officialLink").href = taxRateSource;
+      setLookupStatus(`${municipalityName}公式情報（${confirmedYear || "適用年度要確認"}）に基づく固定資産税率${formatTaxRate()}％を使用しています。`, "success", taxRateSource);
+      closeWebTaxRateDialog();
+      render();
     }
 
     function setLookupStatus(message, type, sourceUrl = "") {
