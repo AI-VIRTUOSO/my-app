@@ -686,26 +686,22 @@
         if (!config.firebaseApiKey || config.firebaseApiKey.includes("REPLACE")) {
           throw new Error("認証設定が完了していません。管理者へ連絡してください。");
         }
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 15000);
-        let response;
+        const response = await new Promise((resolve, reject) => {
+          const request = new XMLHttpRequest();
+          request.open("POST", `https://identitytoolkit.googleapis.com/v1/accounts:${action}?key=${encodeURIComponent(config.firebaseApiKey)}`, true);
+          request.timeout = 15000;
+          request.setRequestHeader("Content-Type", "application/json");
+          request.onload = () => resolve({ ok: request.status >= 200 && request.status < 300, status: request.status, text: request.responseText });
+          request.onerror = () => reject(new Error("Firebaseへ接続できませんでした。広告ブロック・セキュリティソフト・VPN・ネットワーク設定を確認してください。"));
+          request.ontimeout = () => reject(new Error("Firebaseへの接続が15秒以内に完了しませんでした。広告ブロック・セキュリティソフト・VPN・ネットワーク設定を確認してください。"));
+          request.onabort = () => reject(new Error("Firebaseへの接続が中断されました。"));
+          request.send(JSON.stringify(body));
+        });
         let result;
         try {
-          response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:${action}?key=${encodeURIComponent(config.firebaseApiKey)}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-            cache: "no-store",
-            signal: controller.signal
-          });
-          result = await response.json();
-        } catch (error) {
-          if (error.name === "AbortError") {
-            throw new Error("Firebaseへの接続が15秒以内に完了しませんでした。広告ブロック・セキュリティソフト・ネットワーク設定を確認してください。");
-          }
-          throw new Error(`Firebaseへ接続できませんでした。ネットワークまたはブラウザの通信制限を確認してください。（${error.message}）`);
-        } finally {
-          clearTimeout(timeout);
+          result = JSON.parse(response.text || "{}");
+        } catch {
+          throw new Error(`Firebaseから不正な応答を受信しました。（HTTP ${response.status}）`);
         }
         if (!response.ok) {
           const code = result.error?.message || "UNKNOWN";
