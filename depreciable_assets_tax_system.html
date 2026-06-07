@@ -373,14 +373,14 @@
 </head>
 <body class="auth-locked">
   <section class="auth-gate" id="authGate" aria-labelledby="authTitle">
-    <form class="auth-card" id="authForm">
+    <form class="auth-card" id="authForm" novalidate>
       <div class="brand-mark">税</div>
       <h1 id="authTitle">サインイン</h1>
       <p>自治体別償却資産申告支援システムを利用するには、管理者から発行されたIDとパスワードを入力してください。</p>
       <label for="authEmail">ID（メールアドレス）</label>
       <input id="authEmail" type="email" autocomplete="username" required>
       <label for="authPassword">パスワード</label>
-      <input id="authPassword" type="password" autocomplete="current-password" required minlength="8">
+      <input id="authPassword" type="password" autocomplete="current-password" required>
       <button class="auth-submit" id="authSubmit" type="submit">サインイン</button>
       <button class="auth-reset" id="authReset" type="button">パスワードを再設定する</button>
       <div class="auth-message" id="authMessage" role="alert"></div>
@@ -724,10 +724,12 @@
       form.addEventListener("submit", async event => {
         event.preventDefault();
         submit.disabled = true;
-        message.textContent = "";
+        message.textContent = "認証しています...";
         try {
           const email = document.querySelector("#authEmail").value.trim();
           const password = document.querySelector("#authPassword").value;
+          if (!email || !email.includes("@")) throw new Error("IDとして有効なメールアドレスを入力してください。");
+          if (!password) throw new Error("パスワードを入力してください。");
           const result = await firebaseRequest("signInWithPassword", { email, password, returnSecureToken: true });
           if (!isAllowedEmail(result.email || email)) throw new Error("このIDには利用権限がありません。");
           sessionStorage.setItem(tokenKey, result.idToken);
