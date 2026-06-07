@@ -57,6 +57,10 @@
       background: var(--green-dark); color: white; font-weight: 800;
     }
     .auth-submit:disabled { cursor: wait; opacity: .6; }
+    .auth-reset {
+      width: 100%; margin-top: 8px; padding: 8px; border: 1px solid var(--line);
+      border-radius: 12px; background: white; color: var(--green-dark); font-size: 11px; font-weight: 800;
+    }
     .auth-message {
       min-height: 20px; margin-top: 12px; padding: 0; color: var(--red);
       font-size: 12px; font-weight: 800; line-height: 1.5;
@@ -378,6 +382,7 @@
       <label for="authPassword">パスワード</label>
       <input id="authPassword" type="password" autocomplete="current-password" required minlength="8">
       <button class="auth-submit" id="authSubmit" type="submit">サインイン</button>
+      <button class="auth-reset" id="authReset" type="button">パスワードを再設定する</button>
       <div class="auth-message" id="authMessage" role="alert"></div>
     </form>
   </section>
@@ -659,6 +664,7 @@
       const gate = document.querySelector("#authGate");
       const form = document.querySelector("#authForm");
       const submit = document.querySelector("#authSubmit");
+      const reset = document.querySelector("#authReset");
       const message = document.querySelector("#authMessage");
       const tokenKey = "assetTaxFirebaseIdToken";
 
@@ -731,6 +737,24 @@
           message.textContent = error.message;
         } finally {
           submit.disabled = false;
+        }
+      });
+
+      reset.addEventListener("click", async () => {
+        const email = document.querySelector("#authEmail").value.trim();
+        if (!email) {
+          message.textContent = "先にID（メールアドレス）を入力してください。";
+          return;
+        }
+        reset.disabled = true;
+        message.textContent = "";
+        try {
+          await firebaseRequest("sendOobCode", { requestType: "PASSWORD_RESET", email });
+          message.textContent = "パスワード再設定メールを送信しました。メール内の案内から新しいパスワードを設定してください。";
+        } catch (error) {
+          message.textContent = error.message;
+        } finally {
+          reset.disabled = false;
         }
       });
 
