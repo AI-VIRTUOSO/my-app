@@ -174,7 +174,7 @@
     }
     .hero-description { margin-top: 2px; }
     .hero-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
-    .hero-tags span { border-radius: 999px; background: rgba(255,255,255,.12); padding: 3px 9px; font-size: 11px; }
+    .hero-tags > span { border-radius: 999px; background: rgba(255,255,255,.12); padding: 3px 9px; font-size: 11px; }
 
     .deadline {
       background: #d7e0e7; padding: 8px 22px; display: flex;
@@ -242,8 +242,19 @@
     .filing-progress-item.pending .filing-progress-number { background: #8796a2; }
     .filing-scope-badge {
       display: inline-flex; align-items: center; border-radius: 999px;
-      padding: 3px 9px; background: #e7edf2; color: var(--green-dark);
-      font-size: 10px; font-weight: 900;
+      padding: 3px 9px; border: 1px solid rgba(255,231,112,.58);
+      background: linear-gradient(180deg, rgba(18,39,58,.94), rgba(28,54,75,.92));
+      color: #ffe76f; font-size: 10px; font-weight: 900;
+      background-clip: padding-box;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 0 9px rgba(255,222,72,.12);
+      text-shadow: 0 0 5px rgba(255,230,92,.24);
+    }
+    .filing-scope-badge .gold-text {
+      color: #ffe76f;
+      background: linear-gradient(180deg, #fffde0 0%, #fff28a 28%, #ffd91f 58%, #fff5a8 100%);
+      background-clip: text; -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 1px 1px rgba(255,231,92,.2));
     }
     .stat, .panel {
       background: var(--card); border: 1px solid rgba(219,228,222,.85);
@@ -583,15 +594,15 @@
         display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
         gap: 4px; width: 100%; margin-top: 5px;
       }
-      .hero-tags span {
+      .hero-tags > span {
         padding: 3px 4px; font-size: 8px; line-height: 1.2;
         text-align: center; white-space: nowrap;
       }
-      .hero-tags span:nth-child(1),
-      .hero-tags span:nth-child(2),
-      .hero-tags span:nth-child(3) { grid-column: span 2; }
-      .hero-tags span:nth-child(4),
-      .hero-tags span:nth-child(5) { grid-column: span 3; }
+      .hero-tags > span:nth-child(1),
+      .hero-tags > span:nth-child(2),
+      .hero-tags > span:nth-child(3) { grid-column: span 2; }
+      .hero-tags > span:nth-child(4),
+      .hero-tags > span:nth-child(5) { grid-column: span 3; }
       .filing-progress { grid-template-columns: 1fr; }
       .filing-progress-item { padding: 8px 10px; }
       .deadline p { white-space: normal; }
@@ -720,7 +731,7 @@
         <h1><span class="hero-product-row"><span class="hero-product-icon" aria-hidden="true">紬</span><span class="hero-product-name">TSUMUGI Asset</span></span></h1>
         <div class="hero-catchcopy">資産情報を紬ぎ、申告を確かなかたちへ。</div>
         <p class="hero-description">東京都23区の償却資産申告に必要な情報を整理し、正式様式への正確な転記を支援します。</p>
-        <div class="hero-tags"><span>東京都23区共通様式</span><span>第26号様式</span><span id="taxRateTag">固定資産税率 1.4%</span><span>毎年1月1日時点</span><span class="filing-scope-badge">正式様式への転記支援</span></div>
+        <div class="hero-tags"><span>東京都23区共通様式</span><span>第26号様式</span><span id="taxRateTag">固定資産税率 1.4%</span><span>毎年1月1日時点</span><span class="filing-scope-badge"><span class="gold-text">正式様式への転記支援</span></span></div>
       </div>
       <aside class="deadline">
         <div>
