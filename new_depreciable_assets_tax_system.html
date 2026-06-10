@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src https://identitytoolkit.googleapis.com; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <title>償却資産申告支援システム TSUMUGI Asset</title>
+  <title>東京都中央区・第26号様式対応 償却資産申告支援システム | TSUMUGI Asset</title>
   <link rel="icon" href="tsumugi-asset-icon.svg" type="image/svg+xml">
   <style>
     :root {
@@ -589,6 +589,52 @@
       .panel-head > div { min-width: 0; flex: 1 1 210px; }
       .panel-head .year-chip { flex: 0 0 auto; width: auto; min-width: 82px; }
       .panel h2, .panel-sub { overflow-wrap: anywhere; }
+      .layout .panel:first-child { padding: 8px 10px 9px; }
+      .layout .panel:first-child .panel-head { margin-bottom: 4px; gap: 4px; }
+      .layout .panel:first-child .step { font-size: 9px; line-height: 1.1; }
+      .layout .panel:first-child h2 { font-size: 16px; line-height: 1.15; }
+      .layout .panel:first-child .panel-sub {
+        margin-top: 1px; font-size: 9px; line-height: 1.2;
+      }
+      .layout .panel:first-child .form-grid {
+        grid-template-columns: 1fr 1fr; gap: 4px 7px;
+      }
+      .layout .panel:first-child .field.full { grid-column: 1 / -1; }
+      .layout .panel:first-child label {
+        margin-bottom: 1px; font-size: 10px; line-height: 1.15;
+      }
+      .layout .panel:first-child input,
+      .layout .panel:first-child select {
+        min-height: 32px; height: 32px; padding: 3px 8px;
+        border-radius: 9px; font-size: 11px;
+      }
+      .layout .panel:first-child .acquired-grid { gap: 4px; }
+      .layout .panel:first-child .usage-switch { gap: 4px; }
+      .layout .panel:first-child .usage-switch label {
+        min-height: 30px; padding: 6px 2px; font-size: 10px; line-height: 1.1;
+      }
+      .layout .panel:first-child .helper,
+      .layout .panel:first-child .helper.compact {
+        margin-top: 1px; font-size: 8px; line-height: 1.15;
+      }
+      .layout .panel:first-child .advanced-fields {
+        grid-column: 1 / -1; border-radius: 10px;
+      }
+      .layout .panel:first-child .advanced-fields summary {
+        padding: 6px 8px; font-size: 9px; line-height: 1.2;
+      }
+      .layout .panel:first-child .advanced-fields .form-grid { padding: 7px; }
+      .layout .panel:first-child .result-preview {
+        margin-top: 4px; padding: 6px 8px; border-radius: 10px;
+      }
+      .layout .panel:first-child .result-preview strong { font-size: 10px; }
+      .layout .panel:first-child .result-preview p {
+        margin-top: 1px; font-size: 8px; line-height: 1.15;
+      }
+      .layout .panel:first-child .add-button {
+        min-height: 32px; margin-top: 4px; padding: 4px 8px;
+        border-radius: 10px; font-size: 11px;
+      }
       .asset-list { width: 100%; }
       .asset {
         width: 100%; min-width: 0; grid-template-columns: 36px minmax(0, 1fr) 32px;
@@ -624,7 +670,7 @@
     <form class="auth-card" id="authForm" novalidate>
       <div class="brand-mark">紬</div>
       <h1 id="authTitle">サインイン</h1>
-      <p>償却資産申告支援システム TSUMUGI Assetを利用するには、管理者から発行されたIDとパスワードを入力してください。</p>
+      <p>第26号様式対応 償却資産申告支援システム TSUMUGI Assetを利用するには、管理者から発行されたIDとパスワードを入力してください。</p>
       <label for="authEmail">ID（メールアドレス）</label>
       <input id="authEmail" type="email" autocomplete="username" required>
       <label for="authPassword">パスワード</label>
@@ -637,7 +683,7 @@
   <header class="topbar">
     <div class="brand">
       <div class="brand-mark">紬</div>
-      <div class="brand-title"><span class="brand-system-name">償却資産申告支援システム</span><span class="brand-product-name">TSUMUGI Asset</span><small>TSUMUGI ASSET</small></div>
+      <div class="brand-title"><span class="brand-system-name">第26号様式対応 償却資産申告支援システム</span><span class="brand-product-name">TSUMUGI Asset</span><small>TSUMUGI ASSET</small></div>
     </div>
     <div class="topbar-tools">
       <div class="municipality-compact" aria-label="東京都23区内の資産所在区">
@@ -657,7 +703,7 @@
   <main>
     <section class="hero">
       <div class="hero-main">
-        <div class="hero-context-line"><span id="municipalityHero">東京都中央区</span>・紙提出用 <span class="hero-title-kicker">第26号様式作成支援システム</span></div>
+        <div class="hero-context-line"><span id="municipalityHero">東京都中央区</span>・第26号様式対応 <span class="hero-title-kicker">償却資産申告支援システム</span></div>
         <h1><span class="hero-product-row"><span class="hero-product-icon" aria-hidden="true">紬</span><span class="hero-product-name">TSUMUGI Asset</span></span></h1>
         <p>東京都23区へ紙提出する償却資産申告書と種類別明細書の作成に必要な情報を整理します。</p>
         <div class="hero-tags"><span>東京都23区共通様式</span><span>第26号様式</span><span id="taxRateTag">固定資産税率 1.4%</span><span>毎年1月1日時点</span><span class="filing-scope-badge">正式様式出力は整備中</span></div>
