@@ -97,6 +97,8 @@
       background: var(--green); color: white; font-size: 20px;
       box-shadow: 0 8px 18px rgba(32,63,90,.22);
     }
+    .brand-system-name, .brand-product-name { display: inline; }
+    .brand-product-name { margin-left: .35em; }
     .brand small { display: block; color: var(--muted); font-size: 11px; letter-spacing: .12em; }
     @media (max-width: 1550px) {
       .brand-title { display: none; }
@@ -464,20 +466,27 @@
       main { padding: 14px 12px 30px; }
       .topbar {
         position: static; display: grid; grid-template-columns: minmax(0, 1fr);
-        align-items: stretch; gap: 7px; width: 100%; min-height: 52px;
-        padding: 8px 10px;
+        align-items: stretch; gap: 10px; width: 100%; min-height: 52px;
+        padding: 10px 12px 12px;
       }
-      .brand { width: 100%; min-width: 0; gap: 8px; }
-      .brand-mark { flex: 0 0 30px; width: 30px; height: 30px; font-size: 17px; }
+      .brand {
+        width: 100%; min-width: 0; gap: 10px; align-items: center;
+        padding: 0 2px 9px; border-bottom: 1px solid var(--line);
+      }
+      .brand-mark { flex: 0 0 36px; width: 36px; height: 36px; font-size: 19px; }
       .brand-title {
-        display: block; min-width: 0; font-size: 13px; line-height: 1.25;
-        overflow-wrap: anywhere;
+        display: grid; min-width: 0; gap: 1px; font-size: 13px; line-height: 1.25;
       }
+      .brand-system-name { display: block; color: var(--muted); font-size: 11px; font-weight: 800; }
+      .brand-product-name { display: block; margin: 0; color: var(--ink); font-size: 16px; font-weight: 900; }
       .brand small { display: none; }
-      .topbar-tools { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; gap: 6px; padding: 0; }
+      .topbar-tools {
+        display: grid; grid-template-columns: minmax(0, 1fr);
+        width: 100%; gap: 8px; padding: 0;
+      }
       .municipality-compact {
         display: grid; grid-template-columns: minmax(0, 1fr);
-        width: 100%; gap: 5px;
+        width: 100%; gap: 6px; order: 1;
       }
       .municipality-compact input, .municipality-compact select, .lookup-button {
         width: 100%; height: 44px; min-width: 0; border-radius: 12px;
@@ -491,16 +500,17 @@
       }
       .action-group {
         display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-        width: 100%; gap: 6px;
+        width: 100%; gap: 7px; order: 2;
       }
       .action-group > * {
         width: 100%; min-width: 0; max-width: none; min-height: 44px;
-        margin: 0; white-space: normal; overflow-wrap: anywhere;
+        margin: 0; padding: 7px 8px; white-space: normal; overflow-wrap: anywhere;
+        border-radius: 12px;
       }
-      .action-group .forms-button { grid-column: 1; grid-row: 1; }
-      .action-group .document-button { grid-column: 2; grid-row: 1; }
-      .action-group .logout-button { grid-column: 1; grid-row: 2; }
-      .action-group .year-chip { grid-column: 2; grid-row: 2; max-width: none; padding: 6px 7px; font-size: 13px; }
+      .action-group .document-button { grid-column: 1; grid-row: 1; }
+      .action-group .forms-button { grid-column: 2; grid-row: 1; }
+      .action-group .year-chip { grid-column: 1; grid-row: 2; max-width: none; font-size: 13px; }
+      .action-group .logout-button { grid-column: 2; grid-row: 2; }
       .document-button, .forms-button { padding: 7px 8px; font-size: 13px; line-height: 1.25; }
       .logout-button { border-radius: 12px; font-size: 13px; }
       .hero-main, .deadline { border-radius: 20px; padding: 9px 14px; }
@@ -576,7 +586,7 @@
   <header class="topbar">
     <div class="brand">
       <div class="brand-mark">紬</div>
-      <div class="brand-title">償却資産申告支援システム TSUMUGI Asset-check<small>TSUMUGI ASSET-CHECK</small></div>
+      <div class="brand-title"><span class="brand-system-name">償却資産申告支援システム</span><span class="brand-product-name">TSUMUGI Asset-check</span><small>TSUMUGI ASSET-CHECK</small></div>
     </div>
     <div class="topbar-tools">
       <div class="municipality-compact" aria-label="東京都23区内の資産所在区">
