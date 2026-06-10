@@ -19,7 +19,9 @@
       --green-soft: #e5f3f1;
       --lime: #82aaa5;
       --brand-blue: #315b7d;
-      --brand-gold: #c89232;
+      --brand-gold-light: #fff0a6;
+      --brand-gold: #e6bd4b;
+      --brand-gold-dark: #9a6817;
       --slate: #46545f;
       --slate-soft: #70808c;
       --amber: #b87503;
@@ -96,9 +98,15 @@
     .brand-mark {
       width: 32px; height: 32px; border-radius: 10px;
       display: grid; place-items: center;
-      border: 2px solid var(--brand-gold);
+      border: 2px solid transparent;
       background: var(--brand-blue); color: white; font-size: 20px;
-      box-shadow: 0 8px 18px rgba(32,63,90,.22);
+      background:
+        linear-gradient(var(--brand-blue), var(--brand-blue)) padding-box,
+        linear-gradient(135deg, var(--brand-gold-light) 0%, var(--brand-gold) 38%, var(--brand-gold-dark) 72%, var(--brand-gold-light) 100%) border-box;
+      box-shadow:
+        0 8px 18px rgba(32,63,90,.22),
+        inset 0 1px 0 rgba(255,255,255,.2),
+        0 0 0 1px rgba(230,189,75,.16);
     }
     .brand-system-name, .brand-product-name { display: inline; }
     .brand-product-name { margin-left: .35em; }
@@ -395,9 +403,13 @@
     .hero-product-icon {
       flex: 0 0 clamp(30px, 3.55vw, 46px); width: clamp(30px, 3.55vw, 46px);
       height: clamp(30px, 3.55vw, 46px); display: grid; place-items: center;
-      border: 1px solid rgba(255,255,255,.24); border-radius: 28%;
-      background: rgba(255,255,255,.14); color: white; font-size: clamp(20px, 2.45vw, 32px);
-      font-weight: 800; line-height: 1; box-shadow: 0 8px 20px rgba(5,20,31,.16);
+      border: 2px solid transparent; border-radius: 28%;
+      background:
+        linear-gradient(rgba(35,61,80,.88), rgba(35,61,80,.88)) padding-box,
+        linear-gradient(135deg, var(--brand-gold-light) 0%, var(--brand-gold) 38%, var(--brand-gold-dark) 72%, var(--brand-gold-light) 100%) border-box;
+      color: white; font-size: clamp(20px, 2.45vw, 32px);
+      font-weight: 800; line-height: 1;
+      box-shadow: 0 8px 20px rgba(5,20,31,.18), inset 0 1px 0 rgba(255,255,255,.18), 0 0 0 1px rgba(230,189,75,.14);
       backdrop-filter: blur(8px); transform: translateY(3pt);
     }
     .hero-product-name { display: block; font-size: clamp(34px, 4vw, 52px); line-height: 1; }
