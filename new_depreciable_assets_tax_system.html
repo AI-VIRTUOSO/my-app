@@ -1526,6 +1526,10 @@
       document.querySelector("#webMunicipalityName").addEventListener("input", updateOfficialUrlCandidate);
       document.querySelector("#assetsTab").addEventListener("click", () => switchResultTab("assets"));
       document.querySelector("#analysisTab").addEventListener("click", () => switchResultTab("analysis"));
+      const otherActions = document.querySelector(".other-actions");
+      otherActions.addEventListener("mouseleave", () => {
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) otherActions.open = false;
+      });
       document.querySelector("#assetSearch").addEventListener("input", event => {
         assetSearchTerm = event.target.value.trim().toLocaleLowerCase("ja-JP");
         render();
