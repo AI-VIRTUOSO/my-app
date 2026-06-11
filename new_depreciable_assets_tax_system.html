@@ -169,6 +169,24 @@
       background: #e5e8ea; color: #3f4d58; font-weight: 800;
     }
     .forms-button:hover { background: #d6dadd; }
+    .other-actions {
+      position: relative; flex: 0 0 140px; width: 140px; min-width: 140px;
+      max-width: 140px; height: auto; padding: 0;
+    }
+    .other-actions summary {
+      width: 140px; height: 34px; display: grid; place-items: center;
+      border: 1px solid #b9c5ce; border-radius: 999px; background: #f3f5f6;
+      color: #334b5b; font-size: 12px; font-weight: 800; cursor: pointer; list-style: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 0 rgba(31,49,64,.12), 0 5px 12px rgba(31,49,64,.1);
+    }
+    .other-actions summary::-webkit-details-marker { display: none; }
+    .other-actions-menu {
+      position: absolute; z-index: 40; top: calc(100% + 7px); right: 0;
+      display: grid; gap: 7px; width: 174px; padding: 9px;
+      border: 1px solid var(--line); border-radius: 13px; background: white;
+      box-shadow: 0 14px 34px rgba(31,49,64,.18);
+    }
+    .other-actions-menu > * { width: 100%; min-width: 0; max-width: none; height: 34px; }
 
     main { max-width: 1240px; margin: auto; padding: 11px 24px 24px; }
 
@@ -269,6 +287,19 @@
       border-radius: 50%; background: var(--green-dark); color: white; font-weight: 900;
     }
     .filing-progress-item.pending .filing-progress-number { background: #8796a2; }
+    .work-status {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 8px;
+    }
+    .work-status-item {
+      display: flex; align-items: center; gap: 8px; padding: 7px 11px;
+      border: 1px solid var(--line); border-radius: 12px; background: #fff;
+      color: var(--muted); font-size: 11px; font-weight: 800;
+    }
+    .work-status-dot { width: 9px; height: 9px; border-radius: 50%; background: #9ba8b1; }
+    .work-status-item.complete { color: var(--green-dark); background: var(--green-soft); }
+    .work-status-item.complete .work-status-dot { background: var(--green); }
+    .work-status-item.warning { color: #8b4b29; background: #fff0e6; border-color: #edc6aa; }
+    .work-status-item.warning .work-status-dot { background: #c76932; }
     .filing-scope-badge {
       display: inline-flex; align-items: center; border-radius: 999px;
       padding: 3px 9px; border: 1px solid rgba(255,231,112,.58);
@@ -341,6 +372,17 @@
     .add-button:hover { background: var(--green-dark); transform: translateY(-1px); }
 
     .asset-list { display: grid; gap: 4px; }
+    .asset-tools {
+      display: grid; grid-template-columns: minmax(150px, 1fr) repeat(5, auto);
+      gap: 6px; margin-bottom: 8px;
+    }
+    .asset-tools input { min-width: 0; min-height: 34px; padding: 5px 10px; font-size: 12px; }
+    .asset-filter {
+      border: 1px solid #b9c5ce; border-radius: 999px; padding: 5px 9px;
+      background: #f3f5f6; color: #526575; font-size: 11px; font-weight: 800;
+    }
+    .asset-filter.active { border-color: var(--green-dark); background: var(--green-dark); color: white; }
+    .asset-filter-summary { margin: -2px 0 7px; color: var(--muted); font-size: 10px; }
     .asset {
       display: grid; grid-template-columns: 42px minmax(130px, 1fr) 110px 110px 30px;
       gap: 11px; align-items: center; padding: 6px 12px;
@@ -403,6 +445,12 @@
       display: flex; gap: 10px; align-items: start; color: #6b5625; font-size: 10px; line-height: 1.5;
     }
     .notice b { color: #55410c; }
+    .notice.system-notice {
+      padding-left: 11px; padding-right: 11px; gap: 7px; align-items: center;
+      font-size: 10.5px; line-height: 1.25; letter-spacing: -.02em; white-space: nowrap;
+    }
+    .system-notice > span { flex: 0 0 auto; }
+    .system-notice > div { min-width: 0; }
     .form-dialog {
       width: min(920px, calc(100vw - 28px)); max-height: calc(100vh - 28px);
       border: 0; border-radius: 20px; padding: 0; color: var(--ink);
@@ -435,6 +483,23 @@
     .dialog-head .sample-fill-button:hover { background: #20534e; border-color: #20534e; }
     .document-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px 14px; }
     .document-form-grid .full { grid-column: 1 / -1; }
+    .declaration-step-tabs {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;
+      margin-bottom: 9px; padding: 4px; border-radius: 12px; background: #edf2f6;
+    }
+    .declaration-step-tab {
+      border: 0; border-radius: 9px; padding: 7px 5px; background: transparent;
+      color: var(--muted); font-size: 11px; font-weight: 800;
+    }
+    .declaration-step-tab.active { background: white; color: var(--green-dark); }
+    #declarationDialog .field.step-hidden { display: none; }
+    .field-error-message { display: none; margin-top: 3px; color: #a43131; font-size: 10px; font-weight: 700; }
+    .field.has-error input,
+    .field.has-error select,
+    .field.has-error textarea {
+      border-color: #c94b4b; background: #fff7f7; box-shadow: 0 0 0 3px rgba(201,75,75,.1);
+    }
+    .field.has-error .field-error-message { display: block; }
     .document-form-grid textarea {
       width: 100%; min-height: 76px; resize: vertical; border: 1px solid var(--line);
       border-radius: 12px; padding: 7.5px 12px; font: inherit; color: var(--ink); background: #fbfcfa;
@@ -602,6 +667,7 @@
 
     @media (max-width: 960px) {
       .hero, .layout { grid-template-columns: 1fr; }
+      .notice.system-notice { font-size: 11px; line-height: 1.45; white-space: normal; }
       .topbar {
         display: flex; flex-wrap: wrap; justify-content: space-between;
         padding-top: 5px; padding-bottom: 5px;
@@ -727,6 +793,7 @@
       .hero-tags > span:nth-child(4),
       .hero-tags > span:nth-child(5) { grid-column: span 3; }
       .filing-progress { grid-template-columns: 1fr; }
+      .work-status { grid-template-columns: 1fr; }
       .filing-progress-item { padding: 8px 10px; }
       .deadline p { white-space: normal; }
       .stats, .lower { grid-template-columns: 1fr; }
@@ -789,6 +856,16 @@
       }
       .asset-icon { width: 36px; height: 36px; font-size: 15px; }
       .asset-number { display: none; }
+      .asset-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .asset-tools input { grid-column: 1 / -1; }
+      .declaration-step-tabs { grid-template-columns: repeat(2, 1fr); }
+      .other-actions { width: 100%; height: auto; min-height: 27px; }
+      .other-actions summary { width: 100%; height: 27px; border-radius: 9px; font-size: 11px; }
+      .other-actions-menu { position: static; width: 100%; margin-top: 5px; box-shadow: none; }
+      .other-actions-menu > * {
+        grid-column: auto !important; grid-row: auto !important;
+        width: 100%; min-width: 0; max-width: none; height: 30px;
+      }
       .remove { width: 32px; min-height: 40px; }
       .lower, .meter-wrap, .yearly-chart { width: 100%; max-width: 100%; }
       .meter-wrap, .yearly-chart { padding-left: 9px; padding-right: 9px; }
@@ -851,9 +928,14 @@
       </div>
       <div class="action-group">
         <button class="document-button" id="createDocument" type="button">正式申告書を生成</button>
-        <select class="year-chip" id="targetYear" aria-label="試算年度"></select>
-        <button class="forms-button" id="openOfficialForms" type="button">関連様式 転記資料</button>
-        <button class="logout-button" id="logoutButton" type="button">ログアウト</button>
+        <details class="other-actions">
+          <summary>その他の操作</summary>
+          <div class="other-actions-menu">
+            <select class="year-chip" id="targetYear" aria-label="試算年度"></select>
+            <button class="forms-button" id="openOfficialForms" type="button">関連様式 転記資料</button>
+            <button class="logout-button" id="logoutButton" type="button">ログアウト</button>
+          </div>
+        </details>
       </div>
     </div>
   </header>
@@ -881,6 +963,11 @@
       <div class="filing-progress-item"><span class="filing-progress-number">1</span><div><strong>資産を登録</strong>申告対象と取得情報を整理</div></div>
       <div class="filing-progress-item"><span class="filing-progress-number">2</span><div><strong>申告内容を確認</strong>増加・減少と評価額を点検</div></div>
       <div class="filing-progress-item pending"><span class="filing-progress-number">3</span><div><strong>正式申告書を生成</strong>公式Excel・PDFを確認して提出</div></div>
+    </section>
+    <section class="work-status" aria-label="申告作業の進捗">
+      <div class="work-status-item" id="assetProgress"><span class="work-status-dot"></span><span>資産未登録</span></div>
+      <div class="work-status-item" id="profileProgress"><span class="work-status-dot"></span><span>基本情報未入力</span></div>
+      <div class="work-status-item" id="reviewProgress"><span class="work-status-dot"></span><span>要確認事項なし</span></div>
     </section>
 
     <section class="stats">
@@ -991,6 +1078,15 @@
           <button class="step-tab" id="analysisTab" type="button" role="tab" aria-selected="false" aria-controls="analysisTabPanel">税額・推移</button>
         </div>
         <div class="step-tab-panel" id="assetsTabPanel" role="tabpanel" aria-labelledby="assetsTab">
+          <div class="asset-tools" aria-label="登録資産の検索と絞り込み">
+            <input id="assetSearch" type="search" placeholder="資産名を検索">
+            <button class="asset-filter active" type="button" data-asset-filter="all">すべて</button>
+            <button class="asset-filter" type="button" data-asset-filter="review">要確認</button>
+            <button class="asset-filter" type="button" data-asset-filter="increase">増加資産</button>
+            <button class="asset-filter" type="button" data-asset-filter="decrease">減少資産</button>
+            <button class="asset-filter" type="button" data-asset-filter="excluded">対象外</button>
+          </div>
+          <div class="asset-filter-summary" id="assetFilterSummary">登録資産 0件を表示</div>
           <div class="asset-list" id="assetList"></div>
         </div>
         <div class="step-tab-panel" id="analysisTabPanel" role="tabpanel" aria-labelledby="analysisTab" hidden>
@@ -1016,7 +1112,7 @@
       </article>
     </section>
 
-    <div class="notice">
+    <div class="notice system-notice">
       <span>!</span>
       <div><b>正式申告書生成では、東京都主税局の公式Excelテンプレートへ入力します。</b> 生成後は印刷状態・入力内容・添付書類・提出先を確認してください。課税標準の特例、増加償却、非課税・減免、耐用年数変更、一部減少、明細20件超は個別対応が必要です。</div>
     </div>
@@ -1066,7 +1162,13 @@
     </div>
     <div class="dialog-body">
       <div class="official-form-note">正式帳票生成サービスを利用し、東京都主税局の一般方式用公式Excelへ転記します。サービスが未起動の場合は「正式帳票生成サービス起動.cmd」を起動してください。生成後も、提出前に内容・印刷状態・添付書類を必ず確認してください。</div>
-      <form id="declarationInfoForm">
+      <form id="declarationInfoForm" novalidate>
+        <div class="declaration-step-tabs" role="tablist" aria-label="基本情報の入力段階">
+          <button class="declaration-step-tab active" type="button" data-declaration-step="owner">所有者情報</button>
+          <button class="declaration-step-tab" type="button" data-declaration-step="business">事業情報</button>
+          <button class="declaration-step-tab" type="button" data-declaration-step="conditions">申告条件</button>
+          <button class="declaration-step-tab" type="button" data-declaration-step="submission">提出・確認</button>
+        </div>
         <div class="document-form-grid">
           <div class="field"><label for="ownerCode">所有者コード</label><input id="ownerCode"></div>
           <div class="field"><label for="declarationStatus">申告区分</label><select id="declarationStatus" required><option value="" selected disabled>申告区分を選択してください</option><option>全資産申告（電算処理方式）</option><option>初回申告（一般方式・全資産）</option><option>増加・減少申告（一般方式）</option><option>前年中増減なし</option><option>該当資産なし</option><option>廃業・解散・転出</option></select></div>
@@ -1300,6 +1402,15 @@
         .map(life => [life, Math.round((1 - Math.pow(0.1, 1 / life)) * 1000) / 1000])
     );
     let assets = [];
+    let activeAssetFilter = "all";
+    let assetSearchTerm = "";
+    let activeDeclarationStep = "owner";
+    const declarationStepFields = {
+      owner: ["ownerCode", "declarationStatus", "ownerKana", "taxpayerNumber", "ownerName", "ownerPhone", "ownerPostalCode", "ownerAddress"],
+      business: ["businessType", "capitalAmount", "businessStart", "contactName", "taxAccountant"],
+      conditions: ["shortenedLife", "increasedDepreciation", "nonTaxableAsset", "specialProvisionFlag", "specialDepreciation", "taxFilingMethod", "blueReturn", "leasedAssets", "businessPremisesOwnership"],
+      submission: ["assetLocationDetail", "submissionOffice", "decreasedAssets", "leasedAssetOwner", "attachedDocuments", "declarationRemarks", "municipalityGuideConfirmed"]
+    };
 
     const yen = n => `${Math.floor(n).toLocaleString("ja-JP")}円`;
     const compactYen = n => n >= 10000 ? `${(n / 10000).toLocaleString("ja-JP", { maximumFractionDigits: 1 })}万円` : yen(n);
@@ -1339,6 +1450,15 @@
         render();
       });
       document.querySelector("#assetForm").addEventListener("submit", addAsset);
+      document.querySelector("#assetForm").addEventListener("invalid", event => {
+        event.preventDefault();
+        setDeclarationFieldError(event.target, "この項目は入力が必要です。");
+        event.target.focus();
+      }, true);
+      document.querySelectorAll("#assetForm input, #assetForm select").forEach(field => {
+        field.addEventListener("input", () => clearDeclarationFieldError(field));
+        field.addEventListener("change", () => clearDeclarationFieldError(field));
+      });
       document.querySelector("#addSamples").addEventListener("click", addSampleAssets);
       document.querySelector("#createDocument").addEventListener("click", openDeclarationDialog);
       document.querySelector("#closeDeclarationDialog").addEventListener("click", closeDeclarationDialog);
@@ -1361,9 +1481,55 @@
       document.querySelector("#webMunicipalityName").addEventListener("input", updateOfficialUrlCandidate);
       document.querySelector("#assetsTab").addEventListener("click", () => switchResultTab("assets"));
       document.querySelector("#analysisTab").addEventListener("click", () => switchResultTab("analysis"));
+      document.querySelector("#assetSearch").addEventListener("input", event => {
+        assetSearchTerm = event.target.value.trim().toLocaleLowerCase("ja-JP");
+        render();
+      });
+      document.querySelectorAll("[data-asset-filter]").forEach(button => button.addEventListener("click", () => {
+        activeAssetFilter = button.dataset.assetFilter;
+        document.querySelectorAll("[data-asset-filter]").forEach(item => item.classList.toggle("active", item === button));
+        render();
+      }));
+      document.querySelectorAll("[data-declaration-step]").forEach(button => button.addEventListener("click", () => {
+        switchDeclarationStep(button.dataset.declarationStep);
+      }));
+      document.querySelectorAll("#declarationInfoForm input, #declarationInfoForm select, #declarationInfoForm textarea")
+        .forEach(field => {
+          field.addEventListener("input", () => {
+            clearDeclarationFieldError(field);
+            updateWorkProgress();
+          });
+          field.addEventListener("change", () => {
+            clearDeclarationFieldError(field);
+            updateWorkProgress();
+          });
+        });
+      prepareDeclarationSteps();
       syncLife();
       updateOfficialFormGuide();
       render();
+    }
+
+    function prepareDeclarationSteps() {
+      Object.entries(declarationStepFields).forEach(([step, ids]) => {
+        ids.forEach(id => {
+          const field = document.querySelector(`#${id}`);
+          if (field) field.closest(".field")?.setAttribute("data-declaration-section", step);
+        });
+      });
+      switchDeclarationStep(activeDeclarationStep);
+    }
+
+    function switchDeclarationStep(step) {
+      activeDeclarationStep = step;
+      document.querySelectorAll("[data-declaration-step]").forEach(button => {
+        const active = button.dataset.declarationStep === step;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-selected", String(active));
+      });
+      document.querySelectorAll("#declarationInfoForm [data-declaration-section]").forEach(field => {
+        field.classList.toggle("step-hidden", field.dataset.declarationSection !== step);
+      });
     }
 
     function switchResultTab(tab) {
@@ -1840,11 +2006,97 @@ ${assetSection}
       }
       document.querySelector("#assetLocationDetail").value ||= document.querySelector("#municipality").value.trim();
       document.querySelector("#submissionOffice").value = officialSubmissionOffice();
+      switchDeclarationStep("owner");
+      validateDeclarationForm(false);
+      updateWorkProgress();
       document.querySelector("#declarationDialog").showModal();
     }
 
     function closeDeclarationDialog() {
       document.querySelector("#declarationDialog").close();
+    }
+
+    function declarationFieldStep(id) {
+      return Object.entries(declarationStepFields).find(([, ids]) => ids.includes(id))?.[0] || "owner";
+    }
+
+    function setDeclarationFieldError(field, message) {
+      const wrapper = field.closest(".field");
+      if (!wrapper) return;
+      wrapper.classList.add("has-error");
+      let error = wrapper.querySelector(".field-error-message");
+      if (!error) {
+        error = document.createElement("span");
+        error.className = "field-error-message";
+        wrapper.appendChild(error);
+      }
+      error.textContent = message;
+      field.setAttribute("aria-invalid", "true");
+    }
+
+    function clearDeclarationFieldError(field) {
+      const wrapper = field.closest(".field");
+      if (!wrapper) return;
+      wrapper.classList.remove("has-error");
+      wrapper.querySelector(".field-error-message")?.remove();
+      field.removeAttribute("aria-invalid");
+    }
+
+    function validateDeclarationForm(showErrors = true) {
+      const form = document.querySelector("#declarationInfoForm");
+      const fields = [...form.querySelectorAll("input, select, textarea")];
+      if (showErrors) fields.forEach(clearDeclarationFieldError);
+      const errors = [];
+      fields.filter(field => field.required).forEach(field => {
+        const empty = field.type === "checkbox" ? !field.checked : !field.value.trim();
+        if (empty) errors.push([field, "この項目は入力・確認が必要です。"]);
+      });
+      const taxpayerNumber = document.querySelector("#taxpayerNumber");
+      if (taxpayerNumber.value.trim() && !/^\d{12,13}$/.test(taxpayerNumber.value.trim())) {
+        errors.push([taxpayerNumber, "個人番号・法人番号は数字12桁または13桁で入力してください。"]);
+      }
+      const postalCode = document.querySelector("#ownerPostalCode");
+      if (postalCode.value.trim() && !/^\d{3}-?\d{4}$/.test(postalCode.value.trim())) {
+        errors.push([postalCode, "郵便番号は000-0000の形式で入力してください。"]);
+      }
+      if (showErrors) {
+        errors.forEach(([field, message]) => setDeclarationFieldError(field, message));
+        if (errors.length) {
+          const firstField = errors[0][0];
+          switchDeclarationStep(declarationFieldStep(firstField.id));
+          setTimeout(() => firstField.focus(), 0);
+        }
+      }
+      return errors.length === 0;
+    }
+
+    function isDeclarationProfileComplete() {
+      return validateDeclarationForm(false);
+    }
+
+    function updateWorkProgress() {
+      const assetProgress = document.querySelector("#assetProgress");
+      const profileProgress = document.querySelector("#profileProgress");
+      const reviewProgress = document.querySelector("#reviewProgress");
+      if (!assetProgress || !profileProgress || !reviewProgress) return;
+      const taxableCount = assets.filter(asset => asset.taxable).length;
+      assetProgress.className = `work-status-item${assets.length ? " complete" : ""}`;
+      assetProgress.querySelector("span:last-child").textContent = assets.length
+        ? `資産登録済み ${assets.length}件（対象候補${taxableCount}件）`
+        : "資産未登録";
+      const profileComplete = isDeclarationProfileComplete();
+      profileProgress.className = `work-status-item${profileComplete ? " complete" : ""}`;
+      profileProgress.querySelector("span:last-child").textContent = profileComplete ? "基本情報入力済み" : "基本情報未入力";
+      const increaseCount = assets.filter(asset => asset.taxable && !asset.disposed && isIncreaseAssetForYear(asset, targetYear)).length;
+      const decreaseCount = assets.filter(asset => asset.taxable && asset.disposed && Number(asset.disposed.slice(0, 4)) === targetYear - 1).length;
+      const reviewCount = assets.filter(asset => asset.reviewRequired).length +
+        ["shortenedLife", "increasedDepreciation", "nonTaxableAsset", "specialProvisionFlag"]
+          .filter(id => document.querySelector(`#${id}`)?.value === "有").length +
+        (document.querySelector("#decreasedAssets")?.value.trim() ? 1 : 0) +
+        (increaseCount > 20 ? 1 : 0) +
+        (decreaseCount > 20 ? 1 : 0);
+      reviewProgress.className = `work-status-item${reviewCount ? " warning" : " complete"}`;
+      reviewProgress.querySelector("span:last-child").textContent = reviewCount ? `要確認事項あり ${reviewCount}件` : "要確認事項なし";
     }
 
     function fillDeclarationSample() {
@@ -1884,6 +2136,8 @@ ${assetSection}
         field.dispatchEvent(new Event("change", { bubbles: true }));
       });
       document.querySelector("#municipalityGuideConfirmed").checked = true;
+      validateDeclarationForm(false);
+      updateWorkProgress();
       alert("サンプルデータを入力しました。正式提出前に、すべての項目を実際の申告内容へ差し替えてください。");
     }
 
@@ -2134,7 +2388,7 @@ ${manualDecreaseDetails ? `<div class="notice"><b>一部減少・修正等は取
     async function createDeclarationDocument(event) {
       event.preventDefault();
       const form = event.currentTarget;
-      if (!form.reportValidity()) return;
+      if (!validateDeclarationForm(true)) return;
       if (!municipalityVerified || !TOKYO_WARDS.includes(municipalityName)) {
         alert("東京都23区内の資産所在区を選択してください。");
         return;
@@ -2267,6 +2521,17 @@ ${manualDecreaseDetails ? `<div class="notice"><b>一部減少・修正等は取
       }
     }
 
+    function assetMatchesCurrentFilter(asset) {
+      const searchable = [asset.name, asset.category, asset.assetCode, asset.assetSite]
+        .filter(Boolean).join(" ").toLocaleLowerCase("ja-JP");
+      if (assetSearchTerm && !searchable.includes(assetSearchTerm)) return false;
+      if (activeAssetFilter === "review") return Boolean(asset.reviewRequired);
+      if (activeAssetFilter === "increase") return asset.taxable && !asset.disposed && isIncreaseAssetForYear(asset, targetYear);
+      if (activeAssetFilter === "decrease") return Boolean(asset.disposed) && Number(asset.disposed.slice(0, 4)) === targetYear - 1;
+      if (activeAssetFilter === "excluded") return !asset.taxable;
+      return true;
+    }
+
     function render() {
       const enteredMunicipality = document.querySelector("#municipality").value.trim();
       document.querySelector("#municipalityHero").textContent = enteredMunicipality || municipalityName;
@@ -2275,7 +2540,9 @@ ${manualDecreaseDetails ? `<div class="notice"><b>一部減少・修正等は取
       document.querySelector("#assessmentDateText").textContent =
         `令和${targetYear - 2018}年度（${targetYear}年1月1日時点）の所有資産として試算します。`;
       const list = document.querySelector("#assetList");
-      list.innerHTML = assets.length ? assets.map(asset => {
+      const visibleAssets = assets.filter(assetMatchesCurrentFilter);
+      document.querySelector("#assetFilterSummary").textContent = `登録資産 ${assets.length}件のうち ${visibleAssets.length}件を表示`;
+      list.innerHTML = visibleAssets.length ? visibleAssets.map(asset => {
         const evaluation = evaluationForYear(asset, targetYear);
         return `<div class="asset">
           <div class="asset-icon">${asset.icon}</div>
@@ -2284,7 +2551,7 @@ ${manualDecreaseDetails ? `<div class="notice"><b>一部減少・修正等は取
           <div class="asset-number"><strong>${yen(evaluation)}</strong><span>令和${targetYear - 2018}年度評価額</span></div>
           <button class="remove" type="button" aria-label="削除" onclick="removeAsset('${asset.id}')">×</button>
         </div>`;
-      }).join("") : `<div class="empty">資産を登録すると、ここに評価額と判定結果が表示されます。<br>「例を追加」で画面の動きを確認できます。</div>`;
+      }).join("") : `<div class="empty">${assets.length ? "検索・絞り込み条件に該当する資産はありません。" : "資産を登録すると、ここに評価額と判定結果が表示されます。<br>「例を追加」で画面の動きを確認できます。"}</div>`;
 
       const targetAssets = assets.filter(a => isIncludedInYear(a, targetYear));
       const totalEvaluation = targetAssets.reduce((sum, a) => sum + evaluationForYear(a, targetYear), 0);
@@ -2318,6 +2585,7 @@ ${manualDecreaseDetails ? `<div class="notice"><b>一部減少・修正等は取
       }).join("");
 
       renderYearlyLineChart(taxableAssets);
+      updateWorkProgress();
     }
 
     function renderYearlyLineChart(taxableAssets) {
