@@ -393,12 +393,17 @@
       background: var(--amber-soft); color: #6b5625; font-size: 11px; line-height: 1.5;
     }
     .official-form-note a { color: var(--green-dark); font-weight: 800; }
-    .sample-fill-row { display: flex; justify-content: flex-end; margin: -5px 0 12px; }
+    .dialog-head-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
     .sample-fill-button {
       border: 1px solid #b8c5cf; border-radius: 10px; padding: 7px 14px;
       background: #f2f5f7; color: var(--green-dark); font-size: 12px; font-weight: 800;
     }
     .sample-fill-button:hover { background: #e7edf1; border-color: var(--green-dark); }
+    .dialog-head .sample-fill-button {
+      border-color: #f3d77a; background: #fff8dc; color: #253849;
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    }
+    .dialog-head .sample-fill-button:hover { background: #fff1b8; border-color: #ffe58f; }
     .document-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px 14px; }
     .document-form-grid .full { grid-column: 1 / -1; }
     .document-form-grid textarea {
@@ -423,7 +428,6 @@
     #declarationDialog .official-form-note {
       margin-bottom: 8px; padding: 7px 10px; line-height: 1.4;
     }
-    #declarationDialog .sample-fill-row { margin: -1px 0 7px; }
     #declarationDialog .sample-fill-button { padding: 5px 12px; }
     #declarationDialog .document-form-grid { gap: 6px 14px; }
     #declarationDialog .field label { margin-bottom: 2px; font-size: 12px; line-height: 1.25; }
@@ -721,6 +725,8 @@
       .dialog-actions { display: grid; grid-template-columns: 1fr; }
       .dialog-actions button { width: 100%; min-height: 44px; }
       #declarationDialog .dialog-head { padding: 11px 14px; }
+      #declarationDialog .dialog-head-actions { gap: 5px; }
+      #declarationDialog .sample-fill-button { padding: 5px 8px; font-size: 11px; white-space: nowrap; }
       #declarationDialog .dialog-body { padding: 10px 12px 12px; }
       #declarationDialog .document-form-grid { gap: 7px; }
       #declarationDialog input:not([type="checkbox"]),
@@ -965,14 +971,14 @@
   <dialog class="form-dialog" id="declarationDialog">
     <div class="dialog-head">
       <div><h2>正式な第26号様式を生成</h2><p>東京都主税局の公式Excelへ入力し、提出確認用パッケージを生成します。</p></div>
-      <button class="dialog-close" id="closeDeclarationDialog" type="button" aria-label="閉じる">×</button>
+      <div class="dialog-head-actions">
+        <button class="sample-fill-button" id="fillDeclarationSample" type="button">サンプル記入</button>
+        <button class="dialog-close" id="closeDeclarationDialog" type="button" aria-label="閉じる">×</button>
+      </div>
     </div>
     <div class="dialog-body">
       <div class="official-form-note">正式帳票生成サービスを利用し、東京都主税局の一般方式用公式Excelへ転記します。サービスが未起動の場合は「正式帳票生成サービス起動.cmd」を起動してください。生成後も、提出前に内容・印刷状態・添付書類を必ず確認してください。</div>
       <form id="declarationInfoForm">
-        <div class="sample-fill-row">
-          <button class="sample-fill-button" id="fillDeclarationSample" type="button">サンプル記入</button>
-        </div>
         <div class="document-form-grid">
           <div class="field"><label for="ownerCode">所有者コード</label><input id="ownerCode"></div>
           <div class="field"><label for="declarationStatus">申告区分</label><select id="declarationStatus" required><option value="" selected disabled>申告区分を選択してください</option><option>全資産申告（電算処理方式）</option><option>初回申告（一般方式・全資産）</option><option>増加・減少申告（一般方式）</option><option>前年中増減なし</option><option>該当資産なし</option><option>廃業・解散・転出</option></select></div>
