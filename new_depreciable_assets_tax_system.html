@@ -126,7 +126,7 @@
     .action-group > * {
       flex: 0 0 140px; width: 140px; min-width: 140px; max-width: 140px;
       height: 34px; margin: 0; padding: 6px 5px;
-      font-size: 11px; line-height: 1.25; text-align: center;
+      font-size: 12.33px; line-height: 1.25; text-align: center;
       white-space: nowrap;
     }
     .document-button {
@@ -199,14 +199,14 @@
 
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; }
     .municipality-compact {
-      display: grid; grid-template-columns: 220px 290px;
+      display: grid; grid-template-columns: 220px 320px;
       min-width: 0; gap: 8px; align-items: center;
     }
     .municipality-compact input, .municipality-compact select {
       min-width: 0; height: 32px; padding: 5px 9px; border-radius: 999px;
-      font-size: 11px; background: #f8fafb;
+      font-size: 12.33px; background: #f8fafb;
     }
-    .municipality-compact select { font-size: 12px; font-weight: 800; color: var(--green-dark); }
+    .municipality-compact select { font-size: 13.33px; font-weight: 800; color: var(--green-dark); }
     .municipality-compact #lookupTaxRate { display: none; }
     .lookup-button {
       height: 32px; border: 0; border-radius: 999px; padding: 5px 10px; white-space: nowrap;
@@ -219,7 +219,7 @@
     .lookup-status {
       height: 32px; min-width: 0; padding: 4px 9px; overflow: hidden;
       display: flex; align-items: center; border-radius: 999px; background: #edf2f6;
-      color: var(--muted); font-size: 11px; line-height: 1.2;
+      color: var(--muted); font-size: 12.33px; line-height: 1.2;
     }
     .lookup-status.success { background: var(--green-soft); color: var(--green-dark); }
     .lookup-status.error { background: var(--amber-soft); color: #6b5625; }
@@ -441,6 +441,13 @@
     #declarationDialog .helper { margin-top: 2px; font-size: 10px; line-height: 1.3; }
     #declarationDialog .dialog-actions { margin-top: 9px; }
     #declarationDialog .dialog-actions button { padding: 7px 16px; }
+    #declarationDialog .declaration-output-button {
+      flex: 0 0 180px; min-height: 34px; font-size: 11.5px; white-space: nowrap;
+    }
+    #declarationDialog .sample-pdf-button {
+      border: 1px solid #aab9c5; background: #e9eef2; color: var(--green-dark);
+    }
+    #declarationDialog .sample-pdf-button:hover { background: #dce5eb; }
 
     /* New design: readability, hierarchy and progressive disclosure */
     main { max-width: 1320px; padding-top: 18px; }
@@ -574,13 +581,13 @@
       }
       .municipality-compact input, .municipality-compact select, .lookup-button {
         width: 100%; height: 27px; min-width: 0; padding: 2px 8px;
-        border-radius: 9px; font-size: 10px;
+        border-radius: 9px; font-size: clamp(10px, 2.9vw, 11.33px);
       }
       #lookupTaxRate { max-width: none; }
       .municipality-compact .lookup-status {
         grid-column: auto; width: 100%; height: 24px; min-height: 24px;
         padding: 2px 8px; overflow: hidden; border-radius: 9px;
-        font-size: 9px; line-height: 1.15; white-space: nowrap; text-overflow: ellipsis;
+        font-size: clamp(9.5px, 2.65vw, 10.33px); line-height: 1.15; white-space: nowrap; text-overflow: ellipsis;
       }
       .action-group {
         display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -589,14 +596,14 @@
       .action-group > * {
         width: 100%; height: 27px; min-width: 0; max-width: none; min-height: 27px;
         margin: 0; padding: 2px 3px; white-space: nowrap; overflow: visible;
-        text-overflow: clip; border-radius: 9px; font-size: clamp(8.5px, 2.65vw, 10px); line-height: 1.1;
+        text-overflow: clip; border-radius: 9px; font-size: clamp(9.5px, 2.8vw, 11.33px); line-height: 1.1;
       }
       .action-group .document-button { grid-column: 1; grid-row: 1; }
       .action-group .forms-button { grid-column: 2; grid-row: 1; }
-      .action-group .year-chip { grid-column: 1; grid-row: 2; max-width: none; font-size: 10px; }
+      .action-group .year-chip { grid-column: 1; grid-row: 2; max-width: none; font-size: 11.33px; }
       .action-group .logout-button { grid-column: 2; grid-row: 2; }
-      .document-button, .forms-button { padding: 2px 3px; font-size: clamp(8.5px, 2.65vw, 10px); line-height: 1.1; }
-      .logout-button { border-radius: 9px; font-size: 10px; }
+      .document-button, .forms-button { padding: 2px 3px; font-size: clamp(9.5px, 2.8vw, 11.33px); line-height: 1.1; }
+      .logout-button { border-radius: 9px; font-size: 11.33px; }
       .hero-main, .deadline { border-radius: 20px; padding: 9px 14px; }
       .hero-main {
         background:
@@ -732,6 +739,9 @@
       #declarationDialog input:not([type="checkbox"]),
       #declarationDialog select { min-height: 38px; }
       #declarationDialog .dialog-actions button { min-height: 40px; }
+      #declarationDialog .declaration-output-button {
+        width: 100%; min-height: 40px; font-size: 11.5px;
+      }
     }
   </style>
 </head>
@@ -1012,7 +1022,8 @@
         </div>
         <div class="dialog-actions">
           <button class="secondary" id="cancelDeclarationDialog" type="button">閉じる</button>
-          <button class="primary" type="submit">正式Excel・PDFを生成</button>
+          <button class="primary declaration-output-button" type="submit">正式版Excel・PDF作成</button>
+          <button class="sample-pdf-button declaration-output-button" id="createSamplePdf" type="button">印刷プレビュー</button>
         </div>
       </form>
     </div>
@@ -1255,6 +1266,7 @@
       document.querySelector("#closeDeclarationDialog").addEventListener("click", closeDeclarationDialog);
       document.querySelector("#cancelDeclarationDialog").addEventListener("click", closeDeclarationDialog);
       document.querySelector("#fillDeclarationSample").addEventListener("click", fillDeclarationSample);
+      document.querySelector("#createSamplePdf").addEventListener("click", createSamplePdfPreview);
       document.querySelector("#declarationInfoForm").addEventListener("submit", createDeclarationDocument);
       document.querySelector("#openOfficialForms").addEventListener("click", openOfficialFormsDialog);
       document.querySelector("#closeOfficialForms").addEventListener("click", closeOfficialFormsDialog);
@@ -1794,6 +1806,85 @@ ${assetSection}
       });
       document.querySelector("#municipalityGuideConfirmed").checked = true;
       alert("サンプルデータを入力しました。正式提出前に、すべての項目を実際の申告内容へ差し替えてください。");
+    }
+
+    function createSamplePdfPreview() {
+      const value = id => document.querySelector(`#${id}`).value.trim();
+      const previewWindow = window.open("", "_blank");
+      if (!previewWindow) {
+        alert("サンプルPDF閲覧画面を開けませんでした。ブラウザのポップアップを許可して再試行してください。");
+        return;
+      }
+      previewWindow.opener = null;
+      const targetAssets = assets.filter(asset => asset.taxable && !asset.disposed);
+      const assetRows = targetAssets.map((asset, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${escapeHtml(asset.name)}</td>
+          <td>${escapeHtml(String(asset.assetType || "6"))}</td>
+          <td>${escapeHtml(asset.acquired.replace("-", "年"))}月</td>
+          <td class="number">${yen(asset.price * asset.quantity)}</td>
+          <td>${asset.life}年</td>
+          <td class="number">${yen(evaluationForYear(asset, targetYear))}</td>
+        </tr>`).join("");
+      const previewHtml = `<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="referrer" content="no-referrer">
+<title>第26号様式 サンプルPDFプレビュー</title>
+<style>
+  @page { size: A4 portrait; margin: 10mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px; background: #dfe5e9; color: #172b3a; font-family: "Meiryo UI","Hiragino Sans",sans-serif; }
+  .tools { max-width: 210mm; margin: 0 auto 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .tools strong { font-size: 13px; }
+  .tools button { border: 0; border-radius: 7px; padding: 8px 14px; background: #203f5a; color: white; font-weight: bold; cursor: pointer; }
+  .page { position: relative; width: 210mm; min-height: 297mm; margin: auto; padding: 12mm; overflow: hidden; background: white; box-shadow: 0 8px 30px rgba(24,43,58,.2); }
+  .watermark { position: absolute; inset: 42% auto auto 17%; transform: rotate(-25deg); color: rgba(190,45,45,.12); font-size: 54pt; font-weight: 900; letter-spacing: .15em; }
+  h1 { margin: 0; text-align: center; font-size: 18px; letter-spacing: .08em; }
+  .sample-note { margin: 8px 0; padding: 6px 8px; border: 1px solid #c44949; color: #9b2828; font-size: 9px; font-weight: bold; }
+  .meta { display: flex; justify-content: space-between; margin: 8px 0; font-size: 9px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 7px; font-size: 8px; }
+  th, td { border: 1px solid #596b78; padding: 4px; vertical-align: top; }
+  th { background: #eef2f5; }
+  .profile th { width: 18%; text-align: left; }
+  .profile td { width: 32%; }
+  .number { text-align: right; white-space: nowrap; }
+  h2 { margin: 12px 0 4px; font-size: 11px; }
+  @media print {
+    body { padding: 0; background: white; }
+    .tools { display: none; }
+    .page { box-shadow: none; margin: 0; }
+  }
+</style></head><body>
+<div class="tools"><strong>サンプルPDF閲覧画面</strong><button onclick="window.print()">印刷画面でPDF表示</button></div>
+<main class="page">
+  <div class="watermark">SAMPLE</div>
+  <h1>令和${targetYear - 2018}年度 償却資産申告書 サンプル</h1>
+  <div class="sample-note">これは画面確認用サンプルです。正式な第26号様式ではなく、そのまま提出できません。</div>
+  <div class="meta"><span>提出先：${escapeHtml(value("submissionOffice") || officialSubmissionOffice())}</span><span>作成日：${new Date().toLocaleDateString("ja-JP")}</span></div>
+  <table class="profile">
+    <tr><th>所有者コード</th><td>${escapeHtml(value("ownerCode"))}</td><th>申告区分</th><td>${escapeHtml(value("declarationStatus"))}</td></tr>
+    <tr><th>所有者氏名・法人名</th><td>${escapeHtml(value("ownerName"))}</td><th>フリガナ</th><td>${escapeHtml(value("ownerKana"))}</td></tr>
+    <tr><th>住所・所在地</th><td colspan="3">${escapeHtml(value("ownerPostalCode"))}　${escapeHtml(value("ownerAddress"))}</td></tr>
+    <tr><th>電話番号</th><td>${escapeHtml(value("ownerPhone"))}</td><th>個人・法人番号</th><td>${escapeHtml(value("taxpayerNumber"))}</td></tr>
+    <tr><th>事業種目</th><td>${escapeHtml(value("businessType"))}</td><th>事業開始年月</th><td>${escapeHtml(value("businessStart"))}</td></tr>
+    <tr><th>担当者</th><td>${escapeHtml(value("contactName"))}</td><th>税理士等</th><td>${escapeHtml(value("taxAccountant"))}</td></tr>
+    <tr><th>資産所在地</th><td colspan="3">${escapeHtml(value("assetLocationDetail"))}</td></tr>
+  </table>
+  <h2>申告対象資産一覧</h2>
+  <table>
+    <thead><tr><th>No.</th><th>資産の名称等</th><th>種類</th><th>取得年月</th><th>取得価額</th><th>耐用年数</th><th>参考評価額</th></tr></thead>
+    <tbody>${assetRows || `<tr><td colspan="7">登録された申告対象資産はありません。</td></tr>`}</tbody>
+  </table>
+  <h2>確認事項</h2>
+  <table class="profile">
+    <tr><th>短縮耐用年数</th><td>${escapeHtml(value("shortenedLife"))}</td><th>増加償却</th><td>${escapeHtml(value("increasedDepreciation"))}</td></tr>
+    <tr><th>非課税資産</th><td>${escapeHtml(value("nonTaxableAsset"))}</td><th>課税標準特例</th><td>${escapeHtml(value("specialProvisionFlag"))}</td></tr>
+    <tr><th>備考</th><td colspan="3">${escapeHtml(value("declarationRemarks"))}</td></tr>
+  </table>
+</main></body></html>`;
+      previewWindow.document.open();
+      previewWindow.document.write(previewHtml);
+      previewWindow.document.close();
     }
 
     function createTransferDocument(event) {
