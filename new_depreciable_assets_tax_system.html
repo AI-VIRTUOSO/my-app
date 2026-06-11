@@ -186,7 +186,17 @@
       border: 1px solid var(--line); border-radius: 13px; background: white;
       box-shadow: 0 14px 34px rgba(31,49,64,.18);
     }
-    .other-actions-menu > * { width: 100%; min-width: 0; max-width: none; height: 34px; }
+    .other-actions-menu > * {
+      width: 100%; min-width: 0; max-width: none; height: 34px; min-height: 34px;
+      margin: 0; padding: 5px 10px; border-radius: 9px; font-size: 11.5px;
+      line-height: 1.2; font-weight: 800; text-align: center;
+    }
+    .other-actions-menu #targetYear {
+      appearance: auto; padding-left: 10px; padding-right: 28px;
+      border: 1px solid #b9c5ce; background-color: #f3f5f6; color: #334b5b;
+      text-align: center; text-align-last: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 0 rgba(31,49,64,.12), 0 5px 12px rgba(31,49,64,.1);
+    }
 
     main { max-width: 1240px; margin: auto; padding: 11px 24px 24px; }
 
@@ -559,14 +569,28 @@
     .dialog-close:hover { background: rgba(180,55,55,.35); color: white; }
 
     /* Keep the declaration profile compact while preserving readable controls. */
+    #declarationDialog {
+      height: min(720px, calc(100vh - 28px)); max-height: calc(100vh - 28px);
+      overflow: hidden;
+    }
     #declarationDialog .dialog-head { padding: 13px 18px; align-items: center; }
     #declarationDialog .dialog-head p { margin-top: 2px; }
-    #declarationDialog .dialog-body { padding: 12px 18px 14px; max-height: calc(100vh - 112px); }
-    #declarationDialog .official-form-note {
-      margin-bottom: 8px; padding: 7px 10px; line-height: 1.4;
+    #declarationDialog .dialog-body {
+      height: calc(100% - 62px); max-height: none; padding: 12px 18px 14px;
+      overflow: hidden; display: flex; flex-direction: column;
     }
+    #declarationDialog .official-form-note {
+      flex: 0 0 auto; margin-bottom: 8px; padding: 7px 10px; line-height: 1.4;
+    }
+    #declarationDialog #declarationInfoForm {
+      min-height: 0; flex: 1 1 auto; display: flex; flex-direction: column;
+    }
+    #declarationDialog .declaration-step-tabs { flex: 0 0 auto; }
     #declarationDialog .sample-fill-button { padding: 5px 12px; }
-    #declarationDialog .document-form-grid { gap: 6px 14px; }
+    #declarationDialog .document-form-grid {
+      min-height: 0; flex: 1 1 auto; align-content: start; gap: 6px 14px;
+      overflow-y: auto; padding: 2px 5px 6px 2px; scrollbar-gutter: stable;
+    }
     #declarationDialog .field label { margin-bottom: 2px; font-size: 12px; line-height: 1.25; }
     #declarationDialog input:not([type="checkbox"]),
     #declarationDialog select {
@@ -576,7 +600,9 @@
       min-height: 48px; padding: 5px 10px; font-size: 13px; line-height: 1.35;
     }
     #declarationDialog .helper { margin-top: 2px; font-size: 10px; line-height: 1.3; }
-    #declarationDialog .dialog-actions { margin-top: 9px; }
+    #declarationDialog .dialog-actions {
+      flex: 0 0 auto; margin-top: 9px; padding-top: 8px; border-top: 1px solid var(--line);
+    }
     #declarationDialog .dialog-actions button { padding: 7px 16px; }
     #declarationDialog .declaration-output-button {
       flex: 0 0 180px; min-height: 34px; font-size: 11.5px; white-space: nowrap;
@@ -644,6 +670,18 @@
     }
     .advanced-fields[open] summary { border-bottom: 1px solid var(--line); }
     .advanced-fields .form-grid { padding: 14px; }
+    .layout .panel:first-child .panel-sub { font-size: 11.5px; line-height: 1.4; }
+    .layout .panel:first-child label { font-size: 12px; line-height: 1.3; }
+    .layout .panel:first-child input,
+    .layout .panel:first-child select { font-size: 13px; }
+    .layout .panel:first-child .helper,
+    .layout .panel:first-child .helper.compact {
+      margin-top: 3px; font-size: 10.5px; line-height: 1.4;
+    }
+    .layout .panel:first-child .usage-switch label { font-size: 11px; line-height: 1.25; }
+    .layout .panel:first-child .advanced-fields summary { font-size: 12px; line-height: 1.35; }
+    .layout .panel:first-child .result-preview strong { font-size: 12px; line-height: 1.35; }
+    .layout .panel:first-child .result-preview p { font-size: 10.5px; line-height: 1.4; }
     .step-tabs {
       display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
       margin-bottom: 12px; padding: 4px; border-radius: 14px; background: #edf2f6;
@@ -864,8 +902,10 @@
       .other-actions-menu { position: static; width: 100%; margin-top: 5px; box-shadow: none; }
       .other-actions-menu > * {
         grid-column: auto !important; grid-row: auto !important;
-        width: 100%; min-width: 0; max-width: none; height: 30px;
+        width: 100%; min-width: 0; max-width: none; height: 32px; min-height: 32px;
+        padding: 4px 9px; border-radius: 9px; font-size: 11px; line-height: 1.2;
       }
+      .other-actions-menu #targetYear { padding-left: 9px; padding-right: 26px; font-size: 11px; }
       .remove { width: 32px; min-height: 40px; }
       .lower, .meter-wrap, .yearly-chart { width: 100%; max-width: 100%; }
       .meter-wrap, .yearly-chart { padding-left: 9px; padding-right: 9px; }
@@ -889,7 +929,12 @@
       #declarationDialog .dialog-head { padding: 11px 14px; }
       #declarationDialog .dialog-head-actions { gap: 5px; }
       #declarationDialog .sample-fill-button { padding: 5px 8px; font-size: 11.5px; white-space: nowrap; }
-      #declarationDialog .dialog-body { padding: 10px 12px 12px; }
+      #declarationDialog {
+        height: calc(100vh - 20px); max-height: calc(100vh - 20px);
+      }
+      #declarationDialog .dialog-body {
+        height: calc(100% - 58px); padding: 10px 12px 12px;
+      }
       #declarationDialog .document-form-grid { gap: 7px; }
       #declarationDialog input:not([type="checkbox"]),
       #declarationDialog select { min-height: 38px; }
@@ -1530,6 +1575,8 @@
       document.querySelectorAll("#declarationInfoForm [data-declaration-section]").forEach(field => {
         field.classList.toggle("step-hidden", field.dataset.declarationSection !== step);
       });
+      const fieldsViewport = document.querySelector("#declarationDialog .document-form-grid");
+      if (fieldsViewport) fieldsViewport.scrollTop = 0;
     }
 
     function switchResultTab(tab) {
