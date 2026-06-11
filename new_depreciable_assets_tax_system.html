@@ -393,16 +393,50 @@
       background: var(--amber-soft); color: #6b5625; font-size: 11px; line-height: 1.5;
     }
     .official-form-note a { color: var(--green-dark); font-weight: 800; }
+    .sample-fill-row { display: flex; justify-content: flex-end; margin: -5px 0 12px; }
+    .sample-fill-button {
+      border: 1px solid #b8c5cf; border-radius: 10px; padding: 7px 14px;
+      background: #f2f5f7; color: var(--green-dark); font-size: 12px; font-weight: 800;
+    }
+    .sample-fill-button:hover { background: #e7edf1; border-color: var(--green-dark); }
     .document-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px 14px; }
     .document-form-grid .full { grid-column: 1 / -1; }
     .document-form-grid textarea {
       width: 100%; min-height: 76px; resize: vertical; border: 1px solid var(--line);
       border-radius: 12px; padding: 7.5px 12px; font: inherit; color: var(--ink); background: #fbfcfa;
     }
+    .confirmation-check label {
+      display: flex; align-items: center; gap: 8px; margin: 0; line-height: 1.45;
+    }
+    .confirmation-check input[type="checkbox"] {
+      flex: 0 0 auto; width: 16px; height: 16px; min-height: 0; margin: 0;
+    }
     .dialog-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 15px; }
     .dialog-actions button { border: 0; border-radius: 12px; padding: 10px 18px; font-weight: 800; }
     .dialog-actions .secondary { background: #edf2f6; color: var(--green-dark); }
     .dialog-actions .primary { background: var(--green-dark); color: white; }
+
+    /* Keep the declaration profile compact while preserving readable controls. */
+    #declarationDialog .dialog-head { padding: 13px 18px; }
+    #declarationDialog .dialog-head p { margin-top: 2px; }
+    #declarationDialog .dialog-body { padding: 12px 18px 14px; max-height: calc(100vh - 112px); }
+    #declarationDialog .official-form-note {
+      margin-bottom: 8px; padding: 7px 10px; line-height: 1.4;
+    }
+    #declarationDialog .sample-fill-row { margin: -1px 0 7px; }
+    #declarationDialog .sample-fill-button { padding: 5px 12px; }
+    #declarationDialog .document-form-grid { gap: 6px 14px; }
+    #declarationDialog .field label { margin-bottom: 2px; font-size: 12px; line-height: 1.25; }
+    #declarationDialog input:not([type="checkbox"]),
+    #declarationDialog select {
+      min-height: 32px; padding: 4px 10px; font-size: 13px;
+    }
+    #declarationDialog .document-form-grid textarea {
+      min-height: 48px; padding: 5px 10px; font-size: 13px; line-height: 1.35;
+    }
+    #declarationDialog .helper { margin-top: 2px; font-size: 10px; line-height: 1.3; }
+    #declarationDialog .dialog-actions { margin-top: 9px; }
+    #declarationDialog .dialog-actions button { padding: 7px 16px; }
 
     /* New design: readability, hierarchy and progressive disclosure */
     main { max-width: 1320px; padding-top: 18px; }
@@ -686,6 +720,12 @@
       .dialog-body { padding: 14px; }
       .dialog-actions { display: grid; grid-template-columns: 1fr; }
       .dialog-actions button { width: 100%; min-height: 44px; }
+      #declarationDialog .dialog-head { padding: 11px 14px; }
+      #declarationDialog .dialog-body { padding: 10px 12px 12px; }
+      #declarationDialog .document-form-grid { gap: 7px; }
+      #declarationDialog input:not([type="checkbox"]),
+      #declarationDialog select { min-height: 38px; }
+      #declarationDialog .dialog-actions button { min-height: 40px; }
     }
   </style>
 </head>
@@ -930,6 +970,9 @@
     <div class="dialog-body">
       <div class="official-form-note">正式帳票生成サービスを利用し、東京都主税局の一般方式用公式Excelへ転記します。サービスが未起動の場合は「正式帳票生成サービス起動.cmd」を起動してください。生成後も、提出前に内容・印刷状態・添付書類を必ず確認してください。</div>
       <form id="declarationInfoForm">
+        <div class="sample-fill-row">
+          <button class="sample-fill-button" id="fillDeclarationSample" type="button">サンプル記入</button>
+        </div>
         <div class="document-form-grid">
           <div class="field"><label for="ownerCode">所有者コード</label><input id="ownerCode"></div>
           <div class="field"><label for="declarationStatus">申告区分</label><select id="declarationStatus" required><option value="" selected disabled>申告区分を選択してください</option><option>全資産申告（電算処理方式）</option><option>初回申告（一般方式・全資産）</option><option>増加・減少申告（一般方式）</option><option>前年中増減なし</option><option>該当資産なし</option><option>廃業・解散・転出</option></select></div>
@@ -959,7 +1002,7 @@
           <div class="field full"><label for="leasedAssetOwner">借用資産の貸主等</label><input id="leasedAssetOwner" placeholder="貸主の名称・住所・電話番号"></div>
           <div class="field full"><label for="attachedDocuments">添付書類</label><input id="attachedDocuments" placeholder="短縮耐用年数承認通知書、増加償却届出書、非課税・特例関係資料など"></div>
           <div class="field full"><label for="declarationRemarks">備考・廃業・転出等の補足</label><textarea id="declarationRemarks" placeholder="廃業日、転出先、前年中の増減なし、申告漏れなどの補足事項"></textarea></div>
-          <div class="field full"><label><input id="municipalityGuideConfirmed" type="checkbox" required style="width:auto"> 提出先自治体の対象年度の最新手引き・提出先・必要書類を確認しました</label></div>
+          <div class="field full confirmation-check"><label><input id="municipalityGuideConfirmed" type="checkbox" required> 提出先自治体の対象年度の最新手引き・提出先・必要書類を確認しました</label></div>
         </div>
         <div class="dialog-actions">
           <button class="secondary" id="cancelDeclarationDialog" type="button">閉じる</button>
@@ -1205,6 +1248,7 @@
       document.querySelector("#createDocument").addEventListener("click", openDeclarationDialog);
       document.querySelector("#closeDeclarationDialog").addEventListener("click", closeDeclarationDialog);
       document.querySelector("#cancelDeclarationDialog").addEventListener("click", closeDeclarationDialog);
+      document.querySelector("#fillDeclarationSample").addEventListener("click", fillDeclarationSample);
       document.querySelector("#declarationInfoForm").addEventListener("submit", createDeclarationDocument);
       document.querySelector("#openOfficialForms").addEventListener("click", openOfficialFormsDialog);
       document.querySelector("#closeOfficialForms").addEventListener("click", closeOfficialFormsDialog);
@@ -1704,6 +1748,46 @@ ${assetSection}
 
     function closeDeclarationDialog() {
       document.querySelector("#declarationDialog").close();
+    }
+
+    function fillDeclarationSample() {
+      const sampleValues = {
+        ownerCode: "0001234567",
+        declarationStatus: "初回申告（一般方式・全資産）",
+        ownerKana: "ツムギ　タロウ",
+        taxpayerNumber: "0001234567890",
+        ownerName: "紬　太郎",
+        ownerPhone: "000-123-4567",
+        ownerPostalCode: "000-1234",
+        ownerAddress: "東京都中央区日本橋蛎殻町0-0-0",
+        businessType: "ソフトウェア開発業",
+        capitalAmount: "10000000",
+        businessStart: "2026-01",
+        contactName: "紬　次郎",
+        taxAccountant: "税理士法人　紬",
+        shortenedLife: "無",
+        increasedDepreciation: "無",
+        nonTaxableAsset: "無",
+        specialProvisionFlag: "無",
+        specialDepreciation: "無",
+        taxFilingMethod: "定率法",
+        blueReturn: "無",
+        leasedAssets: "無",
+        businessPremisesOwnership: "自己所有",
+        assetLocationDetail: "東京都中央区",
+        submissionOffice: "東京都中央都税事務所 償却資産班",
+        decreasedAssets: "",
+        leasedAssetOwner: "",
+        attachedDocuments: "",
+        declarationRemarks: ""
+      };
+      Object.entries(sampleValues).forEach(([id, value]) => {
+        const field = document.querySelector(`#${id}`);
+        field.value = value;
+        field.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+      document.querySelector("#municipalityGuideConfirmed").checked = true;
+      alert("サンプルデータを入力しました。正式提出前に、すべての項目を実際の申告内容へ差し替えてください。");
     }
 
     function createTransferDocument(event) {
