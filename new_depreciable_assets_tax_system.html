@@ -499,7 +499,7 @@
     }
     .declaration-step-tab {
       border: 0; border-radius: 9px; padding: 7px 5px; background: transparent;
-      color: var(--muted); font-size: 11px; font-weight: 800;
+      color: var(--muted); font-size: 13.66px; font-weight: 800; white-space: nowrap;
     }
     .declaration-step-tab.active { background: white; color: var(--green-dark); }
     #declarationDialog .field.step-hidden { display: none; }
@@ -586,7 +586,15 @@
       min-height: 0; flex: 1 1 auto; display: flex; flex-direction: column;
     }
     #declarationDialog .declaration-step-tabs { flex: 0 0 auto; }
-    #declarationDialog .sample-fill-button { padding: 5px 12px; }
+    #declarationDialog .sample-fill-button {
+      width: auto; min-width: 82px; min-height: 0; height: auto;
+      padding: 6px 12px; border: 1px solid #b9c5ce; border-radius: 999px;
+      background: #f3f5f6; color: #334b5b; font-size: 10px; line-height: 1.2; font-weight: 700;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 0 rgba(31,49,64,.12), 0 5px 12px rgba(31,49,64,.1);
+    }
+    #declarationDialog .dialog-head .sample-fill-button:hover {
+      background: #e4e9ec; border-color: #91a3af; color: #334b5b;
+    }
     #declarationDialog .document-form-grid {
       min-height: 0; flex: 1 1 auto; align-content: start; gap: 6px 14px;
       overflow-y: auto; padding: 2px 5px 6px 2px; scrollbar-gutter: stable;
@@ -607,7 +615,6 @@
     #declarationDialog .declaration-output-button {
       flex: 0 0 180px; min-height: 34px; font-size: 11.5px; white-space: nowrap;
     }
-    #declarationDialog .sample-fill-button,
     #declarationDialog .dialog-close,
     #declarationDialog #cancelDeclarationDialog { font-size: 11.5px; }
     #declarationDialog .dialog-close {
@@ -897,6 +904,7 @@
       .asset-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .asset-tools input { grid-column: 1 / -1; }
       .declaration-step-tabs { grid-template-columns: repeat(2, 1fr); }
+      .declaration-step-tab { font-size: 13.66px; padding: 7px 4px; }
       .other-actions { width: 100%; height: auto; min-height: 27px; }
       .other-actions summary { width: 100%; height: 27px; border-radius: 9px; font-size: 11px; }
       .other-actions-menu { position: static; width: 100%; margin-top: 5px; box-shadow: none; }
@@ -928,7 +936,9 @@
       .dialog-actions button { width: 100%; min-height: 44px; }
       #declarationDialog .dialog-head { padding: 11px 14px; }
       #declarationDialog .dialog-head-actions { gap: 5px; }
-      #declarationDialog .sample-fill-button { padding: 5px 8px; font-size: 11.5px; white-space: nowrap; }
+      #declarationDialog .sample-fill-button {
+        min-width: 82px; padding: 6px 12px; font-size: 10px; white-space: nowrap;
+      }
       #declarationDialog {
         height: calc(100vh - 20px); max-height: calc(100vh - 20px);
       }
@@ -1246,9 +1256,9 @@
           <div class="field full confirmation-check"><label><input id="municipalityGuideConfirmed" type="checkbox" required> 提出先自治体の対象年度の最新手引き・提出先・必要書類を確認しました</label></div>
         </div>
         <div class="dialog-actions">
-          <button class="secondary" id="cancelDeclarationDialog" type="button">閉じる</button>
           <button class="primary declaration-output-button" type="submit">正式版Excel・PDF作成</button>
           <button class="sample-pdf-button declaration-output-button" id="createSamplePdf" type="button">印刷プレビュー</button>
+          <button class="secondary" id="cancelDeclarationDialog" type="button">閉じる</button>
         </div>
       </form>
     </div>
