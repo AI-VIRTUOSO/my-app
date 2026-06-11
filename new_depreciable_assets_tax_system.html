@@ -1841,10 +1841,12 @@ ${assetSection}
   * { box-sizing: border-box; }
   body { margin: 0; padding: 16px; background: #dfe5e9; color: #172b3a; font-family: "Meiryo UI","Hiragino Sans",sans-serif; }
   .tools { max-width: 210mm; margin: 0 auto 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .tool-actions { display: flex; gap: 8px; align-items: center; }
   .tools strong { font-size: 14.33px; }
-  .tools button { border: 0; border-radius: 7px; padding: 8px 14px; background: #203f5a; color: white; font-size: 14.33px; font-weight: bold; cursor: pointer; }
+  .tools button { border: 0; border-radius: 7px; padding: 8px 14px; background: #203f5a; color: white; font-size: 13px; font-weight: bold; cursor: pointer; }
+  .tools .close-preview { background: #e7ecef; color: #29404f; border: 1px solid #aebbc4; }
   .page { position: relative; width: 210mm; min-height: 297mm; margin: auto; padding: 12mm; overflow: hidden; background: white; box-shadow: 0 8px 30px rgba(24,43,58,.2); }
-  .watermark { position: absolute; left: 17%; transform: rotate(-25deg); color: rgba(190,45,45,.12); font-size: 54pt; font-weight: 900; letter-spacing: .15em; pointer-events: none; }
+  .watermark { position: absolute; left: 50%; transform: translateX(-50%) rotate(-25deg); color: rgba(190,45,45,.12); font-size: 54pt; font-weight: 900; letter-spacing: .15em; white-space: nowrap; pointer-events: none; }
   .watermark-top { top: 23%; }
   .watermark-bottom { top: 68%; }
   h1 { margin: 0; text-align: center; font-size: 19.33px; letter-spacing: .08em; }
@@ -1863,7 +1865,7 @@ ${assetSection}
     .page { box-shadow: none; margin: 0; }
   }
 </style></head><body>
-<div class="tools"><strong>サンプルPDF閲覧画面</strong><button onclick="window.print()">印刷画面でPDF表示</button></div>
+<div class="tools"><strong>サンプルPDF閲覧画面</strong><div class="tool-actions"><button onclick="window.print()">印刷画面でPDF表示</button><button class="close-preview" onclick="window.close()">閲覧画面を閉じる</button></div></div>
 <main class="page">
   <div class="watermark watermark-top">SAMPLE</div>
   <div class="watermark watermark-bottom">SAMPLE</div>
