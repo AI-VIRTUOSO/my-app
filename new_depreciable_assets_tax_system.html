@@ -400,10 +400,10 @@
     }
     .sample-fill-button:hover { background: #e7edf1; border-color: var(--green-dark); }
     .dialog-head .sample-fill-button {
-      border-color: #f3d77a; background: #fff8dc; color: #253849;
-      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+      border-color: var(--green-dark); background: var(--green-dark); color: white;
+      box-shadow: 0 2px 8px rgba(40,103,97,.24);
     }
-    .dialog-head .sample-fill-button:hover { background: #fff1b8; border-color: #ffe58f; }
+    .dialog-head .sample-fill-button:hover { background: #20534e; border-color: #20534e; }
     .document-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px 14px; }
     .document-form-grid .full { grid-column: 1 / -1; }
     .document-form-grid textarea {
@@ -422,7 +422,7 @@
     .dialog-actions .primary { background: var(--green-dark); color: white; }
 
     /* Keep the declaration profile compact while preserving readable controls. */
-    #declarationDialog .dialog-head { padding: 13px 18px; }
+    #declarationDialog .dialog-head { padding: 13px 18px; align-items: center; }
     #declarationDialog .dialog-head p { margin-top: 2px; }
     #declarationDialog .dialog-body { padding: 12px 18px 14px; max-height: calc(100vh - 112px); }
     #declarationDialog .official-form-note {
@@ -443,6 +443,12 @@
     #declarationDialog .dialog-actions button { padding: 7px 16px; }
     #declarationDialog .declaration-output-button {
       flex: 0 0 180px; min-height: 34px; font-size: 11.5px; white-space: nowrap;
+    }
+    #declarationDialog .sample-fill-button,
+    #declarationDialog .dialog-close,
+    #declarationDialog #cancelDeclarationDialog { font-size: 11.5px; }
+    #declarationDialog .dialog-close {
+      width: 30px; height: 30px; padding: 0; display: grid; place-items: center;
     }
     #declarationDialog .sample-pdf-button {
       border: 1px solid #aab9c5; background: #e9eef2; color: var(--green-dark);
@@ -733,7 +739,7 @@
       .dialog-actions button { width: 100%; min-height: 44px; }
       #declarationDialog .dialog-head { padding: 11px 14px; }
       #declarationDialog .dialog-head-actions { gap: 5px; }
-      #declarationDialog .sample-fill-button { padding: 5px 8px; font-size: 11px; white-space: nowrap; }
+      #declarationDialog .sample-fill-button { padding: 5px 8px; font-size: 11.5px; white-space: nowrap; }
       #declarationDialog .dialog-body { padding: 10px 12px 12px; }
       #declarationDialog .document-form-grid { gap: 7px; }
       #declarationDialog input:not([type="checkbox"]),
@@ -1835,20 +1841,22 @@ ${assetSection}
   * { box-sizing: border-box; }
   body { margin: 0; padding: 16px; background: #dfe5e9; color: #172b3a; font-family: "Meiryo UI","Hiragino Sans",sans-serif; }
   .tools { max-width: 210mm; margin: 0 auto 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-  .tools strong { font-size: 13px; }
-  .tools button { border: 0; border-radius: 7px; padding: 8px 14px; background: #203f5a; color: white; font-weight: bold; cursor: pointer; }
+  .tools strong { font-size: 14.33px; }
+  .tools button { border: 0; border-radius: 7px; padding: 8px 14px; background: #203f5a; color: white; font-size: 14.33px; font-weight: bold; cursor: pointer; }
   .page { position: relative; width: 210mm; min-height: 297mm; margin: auto; padding: 12mm; overflow: hidden; background: white; box-shadow: 0 8px 30px rgba(24,43,58,.2); }
-  .watermark { position: absolute; inset: 42% auto auto 17%; transform: rotate(-25deg); color: rgba(190,45,45,.12); font-size: 54pt; font-weight: 900; letter-spacing: .15em; }
-  h1 { margin: 0; text-align: center; font-size: 18px; letter-spacing: .08em; }
-  .sample-note { margin: 8px 0; padding: 6px 8px; border: 1px solid #c44949; color: #9b2828; font-size: 9px; font-weight: bold; }
-  .meta { display: flex; justify-content: space-between; margin: 8px 0; font-size: 9px; }
-  table { width: 100%; border-collapse: collapse; margin-top: 7px; font-size: 8px; }
+  .watermark { position: absolute; left: 17%; transform: rotate(-25deg); color: rgba(190,45,45,.12); font-size: 54pt; font-weight: 900; letter-spacing: .15em; pointer-events: none; }
+  .watermark-top { top: 23%; }
+  .watermark-bottom { top: 68%; }
+  h1 { margin: 0; text-align: center; font-size: 19.33px; letter-spacing: .08em; }
+  .sample-note { margin: 8px 0; padding: 6px 8px; border: 1px solid #c44949; color: #9b2828; font-size: 10.33px; font-weight: bold; }
+  .meta { display: flex; justify-content: space-between; margin: 8px 0; font-size: 10.33px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 7px; font-size: 9.33px; }
   th, td { border: 1px solid #596b78; padding: 4px; vertical-align: top; }
   th { background: #eef2f5; }
   .profile th { width: 18%; text-align: left; }
   .profile td { width: 32%; }
   .number { text-align: right; white-space: nowrap; }
-  h2 { margin: 12px 0 4px; font-size: 11px; }
+  h2 { margin: 12px 0 4px; font-size: 12.33px; }
   @media print {
     body { padding: 0; background: white; }
     .tools { display: none; }
@@ -1857,7 +1865,8 @@ ${assetSection}
 </style></head><body>
 <div class="tools"><strong>サンプルPDF閲覧画面</strong><button onclick="window.print()">印刷画面でPDF表示</button></div>
 <main class="page">
-  <div class="watermark">SAMPLE</div>
+  <div class="watermark watermark-top">SAMPLE</div>
+  <div class="watermark watermark-bottom">SAMPLE</div>
   <h1>令和${targetYear - 2018}年度 償却資産申告書 サンプル</h1>
   <div class="sample-note">これは画面確認用サンプルです。正式な第26号様式ではなく、そのまま提出できません。</div>
   <div class="meta"><span>提出先：${escapeHtml(value("submissionOffice") || officialSubmissionOffice())}</span><span>作成日：${new Date().toLocaleDateString("ja-JP")}</span></div>
