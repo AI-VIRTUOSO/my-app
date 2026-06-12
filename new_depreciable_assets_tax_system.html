@@ -137,6 +137,11 @@
         inset 0 1px 0 rgba(255,255,255,.2),
         0 0 0 1px rgba(230,189,75,.16);
     }
+    .topbar .brand-mark {
+      font-size: 19px; line-height: 1;
+      align-items: center; justify-items: center;
+      padding: 0;
+    }
     .brand-system-name, .brand-product-name { display: inline; }
     .brand-product-name { margin-left: .35em; }
     .brand small { display: block; color: var(--muted); font-size: 11px; letter-spacing: .12em; }
@@ -159,6 +164,7 @@
       white-space: nowrap;
     }
     .document-button {
+      flex-basis: 230px; width: 230px; min-width: 230px; max-width: 230px;
       border: 0; border-radius: 999px;
       background: var(--green-dark); color: white; font-weight: 800;
       box-shadow: 0 7px 16px rgba(40,103,97,.2);
@@ -181,14 +187,18 @@
     }
     .other-actions summary::-webkit-details-marker { display: none; }
     .other-actions-menu {
-      position: absolute; z-index: 40; top: calc(100% + 7px); right: 0;
-      display: grid; gap: 7px; width: 174px; padding: 9px;
+      position: absolute; z-index: 40; top: calc(100% + 3px); left: 50%;
+      transform: translateX(-50%);
+      display: grid; gap: 7px; width: 158px; padding: 8px;
       border: 1px solid var(--line); border-radius: 13px; background: white;
       box-shadow: 0 14px 34px rgba(31,49,64,.18);
     }
+    .other-actions-menu::before {
+      content: ""; position: absolute; left: 0; right: 0; top: -5px; height: 5px;
+    }
     .other-actions-menu > * {
-      width: 100%; min-width: 0; max-width: none; height: 34px; min-height: 34px;
-      margin: 0; padding: 5px 10px; border-radius: 9px; font-size: 11.5px;
+      width: 140px; min-width: 140px; max-width: 140px; height: 34px; min-height: 34px;
+      margin: 0 auto; padding: 5px 10px; border-radius: 999px; font-size: 12px;
       line-height: 1.2; font-weight: 800; text-align: center;
     }
     .other-actions-menu #targetYear {
@@ -204,6 +214,7 @@
       display: grid; grid-template-columns: 1.3fr .7fr; gap: 14px;
       align-items: stretch; margin-bottom: 8px;
     }
+    .hero-side { display: grid; grid-template-rows: 1fr auto; gap: 6px; min-width: 0; }
     .hero-main, .deadline {
       border-radius: 26px; overflow: hidden; position: relative;
       box-shadow: var(--shadow);
@@ -256,11 +267,11 @@
 
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; }
     .municipality-compact {
-      display: grid; grid-template-columns: 220px 320px;
+      display: grid; grid-template-columns: 140px 220px 500px;
       min-width: 0; gap: 8px; align-items: center;
     }
     .municipality-compact input, .municipality-compact select {
-      min-width: 0; height: 32px; padding: 5px 9px; border-radius: 999px;
+      min-width: 0; height: 34px; min-height: 34px; padding: 5px 9px; border-radius: 999px;
       font-size: 12.33px; background: #f8fafb;
     }
     .municipality-compact select { font-size: 13.33px; font-weight: 800; color: var(--green-dark); }
@@ -270,7 +281,10 @@
       background: var(--green-dark); color: white; font-size: 12px; font-weight: 800;
     }
     #lookupTaxRate { width: 140px; min-width: 140px; max-width: 140px; font-size: 13px; }
-    #targetYear { padding-left: 7px; padding-right: 7px; }
+    #targetYear {
+      width: 140px; min-width: 140px; max-width: 140px;
+      padding-left: 7px; padding-right: 24px; text-align: center; text-align-last: center;
+    }
     #addSamples { font-size: 10px; }
     .lookup-button:disabled { cursor: wait; opacity: .55; }
     .lookup-status {
@@ -305,11 +319,71 @@
       border: 1px solid var(--line); border-radius: 12px; background: #fff;
       color: var(--muted); font-size: 11px; font-weight: 800;
     }
+    .work-status-text { min-width: 0; }
     .work-status-dot { width: 9px; height: 9px; border-radius: 50%; background: #9ba8b1; }
+    .work-status-badge {
+      display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+      flex: 0 0 auto; min-width: 64px; margin-left: auto; padding: 3px 8px;
+      border: 1px solid #c8d1d7; border-radius: 999px;
+      background: #f2f5f7; color: #667681; font-size: 9px; font-weight: 900;
+      line-height: 1.2; letter-spacing: .03em; white-space: nowrap;
+    }
+    .work-status-badge::before { content: "○"; font-size: 10px; line-height: 1; }
     .work-status-item.complete { color: var(--green-dark); background: var(--green-soft); }
     .work-status-item.complete .work-status-dot { background: var(--green); }
+    .work-status-item.complete .work-status-badge {
+      border-color: #9fcac0; background: #fff; color: var(--green-dark);
+    }
+    .work-status-item.complete .work-status-badge::before { content: "✓"; }
     .work-status-item.warning { color: #8b4b29; background: #fff0e6; border-color: #edc6aa; }
     .work-status-item.warning .work-status-dot { background: #c76932; }
+    .work-status-item.warning .work-status-badge {
+      border-color: #e2b38f; background: #fff9f4; color: #9a4e25;
+    }
+    .work-status-item.warning .work-status-badge::before { content: "!"; }
+    .draft-controls {
+      display: flex; align-items: center; justify-content: flex-end; gap: 7px;
+      margin: -1px 0 8px; padding: 6px 8px; border: 1px solid var(--line);
+      border-radius: 12px; background: rgba(255,255,255,.78);
+    }
+    .hero-side .draft-controls {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
+      margin: 0; padding: 6px 8px;
+      background: rgba(255,255,255,.9); box-shadow: 0 5px 18px rgba(31,49,64,.05);
+    }
+    .hero-side .draft-status {
+      grid-column: 1 / -1; margin: 0; text-align: center; line-height: 1.35;
+    }
+    .hero-side .draft-control-button { width: 100%; padding: 4px 7px; }
+    .draft-status { margin-right: auto; color: var(--muted); font-size: 10px; font-weight: 800; }
+    .draft-status.enabled { color: var(--green-dark); }
+    .draft-control-button {
+      border: 1px solid #b9c5ce; border-radius: 999px; padding: 5px 10px;
+      background: #f3f5f6; color: #334b5b; font-size: 10px; font-weight: 800;
+    }
+    .draft-control-button.danger { border-color: #d9aaaa; background: #fff2f2; color: #9d3434; }
+    .term-help {
+      position: relative; display: inline-grid; place-items: center; width: 16px; height: 16px;
+      margin-left: 4px; border: 1px solid #8ea2b0; border-radius: 50%;
+      background: #edf2f5; color: #385466; font-size: 10px; font-weight: 900;
+      line-height: 1; cursor: help; vertical-align: middle;
+    }
+    .term-help:hover, .term-help:focus-visible, .term-help[aria-expanded="true"] {
+      border-color: #2b6172; background: #dceaf0; color: #173f50;
+      box-shadow: 0 0 0 3px rgba(43,97,114,.14);
+    }
+    .term-tooltip {
+      position: fixed; z-index: 10000; display: none;
+      width: min(330px, calc(100vw - 24px)); padding: 11px 13px;
+      border: 1px solid rgba(255,255,255,.18); border-radius: 11px;
+      background: #203746; color: white; font-size: 12px; font-weight: 500; line-height: 1.6;
+      box-shadow: 0 12px 32px rgba(20,38,52,.3); pointer-events: none;
+    }
+    .term-tooltip.visible { display: block; }
+    .mobile-use-notice {
+      display: none; margin: 0 0 8px; padding: 8px 10px; border: 1px solid #b9c8d2;
+      border-radius: 12px; background: #eef4f7; color: #385466; font-size: 10px; line-height: 1.45;
+    }
     .filing-scope-badge {
       display: inline-flex; align-items: center; border-radius: 999px;
       padding: 3px 9px; border: 1px solid rgba(255,231,112,.58);
@@ -331,10 +405,25 @@
       border-radius: 20px; box-shadow: 0 9px 30px rgba(31,49,64,.06);
     }
     .stat { padding: 8px 15px; }
+    .stat:not(.primary) {
+      border: 2px solid transparent;
+      background:
+        linear-gradient(var(--card), var(--card)) padding-box,
+        linear-gradient(135deg, #d8e0e5 0%, #c4ced5 34%, #e1e7eb 67%, #c9d3d9 100%) border-box;
+      box-shadow:
+        0 9px 30px rgba(31,49,64,.06),
+        inset 0 1px 0 rgba(255,255,255,.72),
+        0 0 0 1px rgba(158,172,181,.1);
+    }
     .stat-label { color: var(--muted); font-size: 12px; font-weight: 700; margin-bottom: 2px; }
     .stat-value { font-size: 25px; font-weight: 900; letter-spacing: -.04em; }
     .stat-note { color: var(--muted); font-size: 11px; margin-top: 1px; }
-    .stat.primary { background: var(--ink); color: white; border-color: var(--ink); }
+    .stat.primary {
+      border: 2px solid transparent; color: white;
+      background:
+        linear-gradient(var(--ink), var(--ink)) padding-box,
+        linear-gradient(135deg, var(--brand-gold-light) 0%, var(--brand-gold) 38%, var(--brand-gold-dark) 72%, var(--brand-gold-light) 100%) border-box;
+    }
     .stat.primary .stat-label, .stat.primary .stat-note { color: rgba(255,255,255,.6); }
 
     .layout { display: grid; grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); gap: 14px; align-items: start; }
@@ -383,12 +472,13 @@
 
     .asset-list { display: grid; gap: 4px; }
     .asset-tools {
-      display: grid; grid-template-columns: minmax(150px, 1fr) repeat(5, auto);
+      display: grid; grid-template-columns: minmax(150px, 1fr) repeat(5, 68px);
       gap: 6px; margin-bottom: 8px;
     }
     .asset-tools input { min-width: 0; min-height: 34px; padding: 5px 10px; font-size: 12px; }
     .asset-filter {
-      border: 1px solid #b9c5ce; border-radius: 999px; padding: 5px 9px;
+      width: 68px; min-width: 68px; max-width: 68px;
+      border: 1px solid #b9c5ce; border-radius: 999px; padding: 5px 4px;
       background: #f3f5f6; color: #526575; font-size: 11px; font-weight: 800;
     }
     .asset-filter.active { border-color: var(--green-dark); background: var(--green-dark); color: white; }
@@ -685,10 +775,16 @@
     .layout .panel:first-child .helper.compact {
       margin-top: 3px; font-size: 10.5px; line-height: 1.4;
     }
-    .layout .panel:first-child .usage-switch label { font-size: 11px; line-height: 1.25; }
+    .layout .panel:first-child .usage-switch label {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12.33px; line-height: 1.2;
+    }
     .layout .panel:first-child .advanced-fields summary { font-size: 12px; line-height: 1.35; }
+    .layout .panel:first-child .result-preview {
+      margin-top: 11px; padding: 8px 12px; border-radius: 12px;
+    }
     .layout .panel:first-child .result-preview strong { font-size: 12px; line-height: 1.35; }
-    .layout .panel:first-child .result-preview p { font-size: 10.5px; line-height: 1.4; }
+    .layout .panel:first-child .result-preview p { margin-top: 2px; font-size: 10.5px; line-height: 1.3; }
     .step-tabs {
       display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
       margin-bottom: 12px; padding: 4px; border-radius: 14px; background: #edf2f6;
@@ -712,6 +808,7 @@
 
     @media (max-width: 960px) {
       .hero, .layout { grid-template-columns: 1fr; }
+      .hero-side { grid-template-rows: auto auto; }
       .notice.system-notice { font-size: 11px; line-height: 1.45; white-space: normal; }
       .topbar {
         display: flex; flex-wrap: wrap; justify-content: space-between;
@@ -723,7 +820,7 @@
         width: 100%; gap: 6px; justify-self: auto;
       }
       .municipality-compact {
-        width: 100%; grid-template-columns: minmax(200px, 1fr) 140px minmax(280px, 280pt);
+        width: 100%; grid-template-columns: 140px minmax(200px, 1fr) minmax(280px, 280pt);
       }
       .action-group { width: 100%; justify-content: flex-end; }
       .stats { grid-template-columns: 1fr 1fr; }
@@ -743,6 +840,7 @@
         padding: 1px 2px 8px; border-bottom: 1px solid var(--line);
       }
       .brand-mark { flex: 0 0 30px; width: 30px; height: 30px; font-size: 16px; border-radius: 9px; }
+      .topbar .brand-mark { font-size: 15px; }
       .brand-title {
         display: flex; align-items: baseline; min-width: 0; gap: 5px;
         line-height: 1.15; white-space: nowrap;
@@ -769,8 +867,11 @@
         grid-column: 1 / -1; width: 100%; min-width: 0; gap: 4px; order: 1;
       }
       .municipality-compact input, .municipality-compact select, .lookup-button {
-        width: 100%; height: 27px; min-width: 0; padding: 2px 8px;
+        width: 100%; height: 27px; min-width: 0; min-height: 27px; padding: 2px 8px;
         border-radius: 9px; font-size: clamp(10px, 2.9vw, 11.33px);
+      }
+      .municipality-compact #targetYear {
+        width: 100%; min-width: 0; max-width: none; padding-left: 8px; padding-right: 24px;
       }
       #lookupTaxRate { max-width: none; }
       .municipality-compact .lookup-status {
@@ -787,7 +888,12 @@
         margin: 0; padding: 2px 3px; white-space: nowrap; overflow: visible;
         text-overflow: clip; border-radius: 9px; font-size: clamp(9.5px, 2.8vw, 11.33px); line-height: 1.1;
       }
-      .action-group .document-button { grid-column: 1; grid-row: 1; }
+      .action-group .document-button {
+        grid-column: 1 / -1; grid-row: 1;
+        width: 100%; min-width: 0; max-width: none;
+        font-size: clamp(10.5px, 3.1vw, 12px);
+      }
+      .action-group .other-actions { grid-column: 1 / -1; grid-row: 2; }
       .action-group .forms-button { grid-column: 2; grid-row: 1; }
       .action-group .year-chip { grid-column: 1; grid-row: 2; max-width: none; font-size: 11.33px; }
       .action-group .logout-button { grid-column: 2; grid-row: 2; }
@@ -839,6 +945,11 @@
       .hero-tags > span:nth-child(5) { grid-column: span 3; }
       .filing-progress { grid-template-columns: 1fr; }
       .work-status { grid-template-columns: 1fr; }
+      .draft-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+      .draft-status { grid-column: 1 / -1; margin: 0; text-align: center; }
+      .draft-control-button { width: 100%; }
+      .hero-side .draft-controls { padding: 7px 8px; }
+      .mobile-use-notice { display: block; }
       .filing-progress-item { padding: 8px 10px; }
       .deadline p { white-space: normal; }
       .stats, .lower { grid-template-columns: 1fr; }
@@ -870,7 +981,7 @@
       .layout .panel:first-child .acquired-grid { gap: 4px; }
       .layout .panel:first-child .usage-switch { gap: 4px; }
       .layout .panel:first-child .usage-switch label {
-        min-height: 30px; padding: 6px 2px; font-size: 10px; line-height: 1.1;
+        min-height: 30px; padding: 5px 2px; font-size: 11.33px; line-height: 1.1;
       }
       .layout .panel:first-child .helper,
       .layout .panel:first-child .helper.compact {
@@ -884,7 +995,7 @@
       }
       .layout .panel:first-child .advanced-fields .form-grid { padding: 7px; }
       .layout .panel:first-child .result-preview {
-        margin-top: 4px; padding: 6px 8px; border-radius: 10px;
+        margin-top: 3px; padding: 4px 7px; border-radius: 9px;
       }
       .layout .panel:first-child .result-preview strong { font-size: 10px; }
       .layout .panel:first-child .result-preview p {
@@ -903,15 +1014,18 @@
       .asset-number { display: none; }
       .asset-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .asset-tools input { grid-column: 1 / -1; }
+      .asset-filter { width: 100%; min-width: 0; max-width: none; }
       .declaration-step-tabs { grid-template-columns: repeat(2, 1fr); }
       .declaration-step-tab { font-size: 13.66px; padding: 7px 4px; }
       .other-actions { width: 100%; height: auto; min-height: 27px; }
       .other-actions summary { width: 100%; height: 27px; border-radius: 9px; font-size: 11px; }
-      .other-actions-menu { position: static; width: 100%; margin-top: 5px; box-shadow: none; }
+      .other-actions-menu {
+        position: static; width: 100%; margin-top: 3px; transform: none; box-shadow: none;
+      }
       .other-actions-menu > * {
         grid-column: auto !important; grid-row: auto !important;
         width: 100%; min-width: 0; max-width: none; height: 32px; min-height: 32px;
-        padding: 4px 9px; border-radius: 9px; font-size: 11px; line-height: 1.2;
+        padding: 4px 9px; border-radius: 999px; font-size: 11px; line-height: 1.2;
       }
       .other-actions-menu #targetYear { padding-left: 9px; padding-right: 26px; font-size: 11px; }
       .remove { width: 32px; min-height: 40px; }
@@ -977,16 +1091,16 @@
     </div>
     <div class="topbar-tools">
       <div class="municipality-compact" aria-label="東京都23区内の資産所在区">
+        <select class="year-chip" id="targetYear" aria-label="試算年度"></select>
         <select id="municipality" aria-label="資産所在区" title="資産が所在する東京都23区内の区を選択してください"></select>
         <button class="lookup-button" id="lookupTaxRate" type="button">公式税率を設定</button>
         <div class="lookup-status success" id="lookupStatus" title="東京都23区共通様式・東京都主税局公式情報に基づきます">東京都23区共通様式・固定資産税率1.4％</div>
       </div>
       <div class="action-group">
-        <button class="document-button" id="createDocument" type="button">正式申告書を生成</button>
+        <button class="document-button" id="createDocument" type="button">基本情報入力・正式申告書作成</button>
         <details class="other-actions">
           <summary>その他の操作</summary>
           <div class="other-actions-menu">
-            <select class="year-chip" id="targetYear" aria-label="試算年度"></select>
             <button class="forms-button" id="openOfficialForms" type="button">関連様式 転記資料</button>
             <button class="logout-button" id="logoutButton" type="button">ログアウト</button>
           </div>
@@ -1004,14 +1118,21 @@
         <p class="hero-description">東京都23区の償却資産申告に必要な情報を整理し、正式様式への正確な転記を支援します。</p>
         <div class="hero-tags"><span>東京都23区共通様式</span><span>第26号様式</span><span id="taxRateTag">固定資産税率 1.4%</span><span>毎年1月1日時点</span><span class="filing-scope-badge"><span class="gold-text">正式様式への転記支援</span></span></div>
       </div>
-      <aside class="deadline">
-        <div>
-          <div class="eyebrow" id="deadlineLabel">次回 申告期限</div>
-          <div class="date" id="deadlineDate">計算中...</div>
-          <p>償却資産を所有している場合は、課税標準額が150万円未満でも申告が必要です。</p>
-        </div>
-        <a class="official-link" id="officialLink" href="https://www.tax.metro.tokyo.lg.jp/kazei/work/shokyak_sis" target="_blank" rel="noreferrer">税率の参照元を見る →</a>
-      </aside>
+      <div class="hero-side">
+        <aside class="deadline">
+          <div>
+            <div class="eyebrow" id="deadlineLabel">次回 申告期限</div>
+            <div class="date" id="deadlineDate">計算中...</div>
+            <p>償却資産を所有している場合は、課税標準額が150万円未満でも申告が必要です。</p>
+          </div>
+          <a class="official-link" id="officialLink" href="https://www.tax.metro.tokyo.lg.jp/kazei/work/shokyak_sis" target="_blank" rel="noreferrer">税率の参照元を見る →</a>
+        </aside>
+        <section class="draft-controls" aria-label="入力内容の一時保存">
+          <span class="draft-status" id="draftStatus">自動保存は無効です。個人情報は端末内へ保存されません。</span>
+          <button class="draft-control-button" id="toggleAutoSave" type="button">自動保存を有効化</button>
+          <button class="draft-control-button danger" id="deleteDraft" type="button">保存データを削除</button>
+        </section>
+      </div>
     </section>
 
     <section class="filing-progress" aria-label="紙申告書作成の流れ">
@@ -1020,10 +1141,13 @@
       <div class="filing-progress-item pending"><span class="filing-progress-number">3</span><div><strong>正式申告書を生成</strong>公式Excel・PDFを確認して提出</div></div>
     </section>
     <section class="work-status" aria-label="申告作業の進捗">
-      <div class="work-status-item" id="assetProgress"><span class="work-status-dot"></span><span>資産未登録</span></div>
-      <div class="work-status-item" id="profileProgress"><span class="work-status-dot"></span><span>基本情報未入力</span></div>
-      <div class="work-status-item" id="reviewProgress"><span class="work-status-dot"></span><span>要確認事項なし</span></div>
+      <div class="work-status-item" id="assetProgress"><span class="work-status-dot"></span><span class="work-status-text">資産未登録</span><span class="work-status-badge">未完了</span></div>
+      <div class="work-status-item" id="profileProgress"><span class="work-status-dot"></span><span class="work-status-text">基本情報未入力</span><span class="work-status-badge">未完了</span></div>
+      <div class="work-status-item complete" id="reviewProgress"><span class="work-status-dot"></span><span class="work-status-text">要確認事項なし</span><span class="work-status-badge">完了済</span></div>
     </section>
+    <aside class="mobile-use-notice">
+      スマホでは資産確認・簡易登録・印刷プレビューを利用できます。個人番号を含む基本情報の入力と正式帳票作成は、画面の広いPCでの最終確認を推奨します。
+    </aside>
 
     <section class="stats">
       <div class="stat primary"><div class="stat-label">参考税額（自治体決定前）</div><div class="stat-value" id="taxTotal">0円</div><div class="stat-note" id="taxRateNote">東京都中央区 税率1.4%・課税標準特例未適用</div></div>
@@ -1460,6 +1584,11 @@
     let activeAssetFilter = "all";
     let assetSearchTerm = "";
     let activeDeclarationStep = "owner";
+    let draftSaveTimer;
+    let restoringDraft = false;
+    let mobileFormalNoticeShown = false;
+    const DRAFT_STORAGE_KEY = "tsumugiAssetDraftV1";
+    const DRAFT_CONSENT_KEY = "tsumugiAssetDraftConsentV1";
     const declarationStepFields = {
       owner: ["ownerCode", "declarationStatus", "ownerKana", "taxpayerNumber", "ownerName", "ownerPhone", "ownerPostalCode", "ownerAddress"],
       business: ["businessType", "capitalAmount", "businessStart", "contactName", "taxAccountant"],
@@ -1536,9 +1665,15 @@
       document.querySelector("#webMunicipalityName").addEventListener("input", updateOfficialUrlCandidate);
       document.querySelector("#assetsTab").addEventListener("click", () => switchResultTab("assets"));
       document.querySelector("#analysisTab").addEventListener("click", () => switchResultTab("analysis"));
+      document.querySelector("#toggleAutoSave").addEventListener("click", toggleAutoSave);
+      document.querySelector("#deleteDraft").addEventListener("click", deleteSavedDraft);
       const otherActions = document.querySelector(".other-actions");
+      let otherActionsCloseTimer;
+      otherActions.addEventListener("mouseenter", () => clearTimeout(otherActionsCloseTimer));
       otherActions.addEventListener("mouseleave", () => {
-        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) otherActions.open = false;
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+          otherActionsCloseTimer = setTimeout(() => { otherActions.open = false; }, 400);
+        }
       });
       document.querySelector("#assetSearch").addEventListener("input", event => {
         assetSearchTerm = event.target.value.trim().toLocaleLowerCase("ja-JP");
@@ -1563,10 +1698,244 @@
             updateWorkProgress();
           });
         });
+      document.querySelectorAll("#assetForm input, #assetForm select, #declarationInfoForm input, #declarationInfoForm select, #declarationInfoForm textarea, #officialDocumentForm input, #officialDocumentForm select, #officialDocumentForm textarea, #municipality, #targetYear")
+        .forEach(field => {
+          field.addEventListener("input", scheduleDraftSave);
+          field.addEventListener("change", scheduleDraftSave);
+        });
       prepareDeclarationSteps();
       syncLife();
       updateOfficialFormGuide();
+      decorateTermHelp();
+      restoreSavedDraft();
+      updateDraftStatus();
       render();
+    }
+
+    function isAutoSaveEnabled() {
+      try {
+        return localStorage.getItem(DRAFT_CONSENT_KEY) === "true";
+      } catch {
+        return false;
+      }
+    }
+
+    function collectFormValues(formId) {
+      const values = {};
+      document.querySelectorAll(`#${formId} input[id], #${formId} select[id], #${formId} textarea[id]`).forEach(field => {
+        values[field.id] = field.type === "checkbox" || field.type === "radio" ? field.checked : field.value;
+      });
+      return values;
+    }
+
+    function restoreFormValues(values = {}) {
+      Object.entries(values).forEach(([id, value]) => {
+        const field = document.querySelector(`#${id}`);
+        if (!field) return;
+        if (field.type === "checkbox" || field.type === "radio") field.checked = Boolean(value);
+        else field.value = String(value ?? "");
+      });
+    }
+
+    function buildDraftPayload() {
+      return {
+        version: 1,
+        savedAt: new Date().toISOString(),
+        targetYear,
+        municipalityName,
+        assets,
+        assetForm: collectFormValues("assetForm"),
+        declarationForm: collectFormValues("declarationInfoForm"),
+        officialDocumentForm: collectFormValues("officialDocumentForm")
+      };
+    }
+
+    function saveDraftNow() {
+      if (!isAutoSaveEnabled() || restoringDraft) return;
+      try {
+        localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(buildDraftPayload()));
+        updateDraftStatus(new Date());
+      } catch {
+        const status = document.querySelector("#draftStatus");
+        status.className = "draft-status";
+        status.textContent = "自動保存に失敗しました。ブラウザの保存設定を確認してください。";
+      }
+    }
+
+    function scheduleDraftSave() {
+      if (!isAutoSaveEnabled() || restoringDraft) return;
+      clearTimeout(draftSaveTimer);
+      draftSaveTimer = setTimeout(saveDraftNow, 500);
+    }
+
+    function toggleAutoSave() {
+      if (isAutoSaveEnabled()) {
+        if (!confirm("自動保存を無効にしますか？既に保存されたデータは「保存データを削除」を押すまで端末内に残ります。")) return;
+        try {
+          localStorage.removeItem(DRAFT_CONSENT_KEY);
+        } catch {}
+        updateDraftStatus();
+        return;
+      }
+      const consent = confirm("入力内容には氏名・住所・個人番号などの個人情報が含まれます。このブラウザの端末内に入力内容を一時保存しますか？共用端末では有効にしないでください。");
+      if (!consent) return;
+      try {
+        localStorage.setItem(DRAFT_CONSENT_KEY, "true");
+        saveDraftNow();
+      } catch {
+        alert("ブラウザの設定により自動保存を有効化できませんでした。");
+      }
+      updateDraftStatus();
+    }
+
+    function deleteSavedDraft() {
+      if (!confirm("この端末内に保存された入力内容を完全に削除しますか？画面に現在表示中の内容は消えません。")) return;
+      try {
+        localStorage.removeItem(DRAFT_STORAGE_KEY);
+        localStorage.removeItem(DRAFT_CONSENT_KEY);
+      } catch {}
+      updateDraftStatus();
+    }
+
+    function restoreSavedDraft() {
+      if (!isAutoSaveEnabled()) return;
+      try {
+        const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+        if (!raw) return;
+        const draft = JSON.parse(raw);
+        if (draft.version !== 1 || !Array.isArray(draft.assets)) return;
+        restoringDraft = true;
+        assets = draft.assets;
+        if (TOKYO_WARDS.includes(draft.municipalityName)) {
+          municipalityName = draft.municipalityName;
+          document.querySelector("#municipality").value = municipalityName;
+        }
+        if (Number.isInteger(draft.targetYear) && document.querySelector(`#targetYear option[value="${draft.targetYear}"]`)) {
+          targetYear = draft.targetYear;
+          document.querySelector("#targetYear").value = String(targetYear);
+        }
+        restoreFormValues(draft.assetForm);
+        restoreFormValues(draft.declarationForm);
+        restoreFormValues(draft.officialDocumentForm);
+        restoringDraft = false;
+        document.querySelector("#draftStatus").textContent = "端末内の保存データを復元しました。";
+      } catch {
+        restoringDraft = false;
+      }
+    }
+
+    function updateDraftStatus(savedDate) {
+      const status = document.querySelector("#draftStatus");
+      const button = document.querySelector("#toggleAutoSave");
+      const enabled = isAutoSaveEnabled();
+      let hasSavedDraft = false;
+      try {
+        hasSavedDraft = Boolean(localStorage.getItem(DRAFT_STORAGE_KEY));
+      } catch {}
+      status.className = `draft-status${enabled ? " enabled" : ""}`;
+      status.textContent = enabled
+        ? savedDate
+          ? `自動保存中・最終保存 ${savedDate.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })}`
+          : "自動保存は有効です。この端末内にのみ保存します。"
+        : hasSavedDraft
+          ? "自動保存は無効です。以前の保存データが端末内に残っています。"
+          : "自動保存は無効です。個人情報は端末内へ保存されません。";
+      button.textContent = enabled ? "自動保存を無効化" : "自動保存を有効化";
+    }
+
+    function decorateTermHelp() {
+      const help = {
+        shortenedLife: "税務署長の承認を受け、法定耐用年数より短い年数を使用する制度です。承認通知書等の確認が必要です。",
+        increasedDepreciation: "通常より多く減価償却する制度です。税務署への届出内容と償却資産申告での取扱いを確認してください。",
+        nonTaxableAsset: "地方税法等により固定資産税が非課税となる資産です。根拠条項や添付資料の確認が必要です。",
+        specialProvisionFlag: "法律に定められた要件を満たす資産について、課税標準額を軽減する制度です。適用率と必要書類を確認してください。",
+        specialDepreciation: "税務会計上の特別償却や圧縮記帳の有無です。償却資産の取得価額は原則として圧縮前で申告します。",
+        taxFilingMethod: "法人税・所得税の計算で採用している減価償却方法です。償却資産税の評価方法とは異なります。",
+        blueReturn: "税務署へ青色申告の承認申請を行い、承認を受けて申告する制度です。"
+      };
+      let tooltip = document.querySelector("#termTooltip");
+      if (!tooltip) {
+        tooltip = document.createElement("div");
+        tooltip.id = "termTooltip";
+        tooltip.className = "term-tooltip";
+        tooltip.setAttribute("role", "tooltip");
+        document.body.appendChild(tooltip);
+      }
+      Object.entries(help).forEach(([id, text]) => {
+        const label = document.querySelector(`label[for="${id}"]`);
+        if (!label || label.querySelector(".term-help")) return;
+        const icon = document.createElement("span");
+        icon.className = "term-help";
+        icon.tabIndex = 0;
+        icon.textContent = "?";
+        icon.dataset.help = text;
+        icon.setAttribute("role", "button");
+        icon.setAttribute("aria-label", `${label.textContent}の説明`);
+        icon.setAttribute("aria-describedby", "termTooltip");
+        icon.setAttribute("aria-expanded", "false");
+        icon.addEventListener("mouseenter", () => showTermTooltip(icon));
+        icon.addEventListener("mouseleave", hideTermTooltip);
+        icon.addEventListener("focus", () => showTermTooltip(icon));
+        icon.addEventListener("blur", hideTermTooltip);
+        icon.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          showTermTooltip(icon);
+        });
+        icon.addEventListener("keydown", event => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          showTermTooltip(icon);
+        });
+        label.appendChild(icon);
+      });
+      if (!document.documentElement.dataset.termHelpReady) {
+        document.documentElement.dataset.termHelpReady = "true";
+        document.addEventListener("click", event => {
+          if (!event.target.closest(".term-help")) hideTermTooltip();
+        });
+        document.addEventListener("keydown", event => {
+          if (event.key === "Escape") hideTermTooltip();
+        });
+        window.addEventListener("resize", hideTermTooltip);
+        document.addEventListener("scroll", hideTermTooltip, true);
+      }
+    }
+
+    let activeTermHelp = null;
+
+    function showTermTooltip(icon) {
+      const tooltip = document.querySelector("#termTooltip");
+      if (!tooltip || !icon?.dataset.help) return;
+      if (activeTermHelp && activeTermHelp !== icon) activeTermHelp.setAttribute("aria-expanded", "false");
+      activeTermHelp = icon;
+      icon.setAttribute("aria-expanded", "true");
+      tooltip.textContent = icon.dataset.help;
+      tooltip.classList.add("visible");
+      tooltip.style.left = "12px";
+      tooltip.style.top = "12px";
+
+      const iconRect = icon.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const edge = 12;
+      const gap = 8;
+      const left = Math.min(
+        Math.max(iconRect.left + iconRect.width / 2 - tooltipRect.width / 2, edge),
+        window.innerWidth - tooltipRect.width - edge
+      );
+      const below = iconRect.bottom + gap;
+      const top = below + tooltipRect.height <= window.innerHeight - edge
+        ? below
+        : Math.max(edge, iconRect.top - tooltipRect.height - gap);
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+    }
+
+    function hideTermTooltip() {
+      const tooltip = document.querySelector("#termTooltip");
+      tooltip?.classList.remove("visible");
+      activeTermHelp?.setAttribute("aria-expanded", "false");
+      activeTermHelp = null;
     }
 
     function prepareDeclarationSteps() {
@@ -2065,6 +2434,11 @@ ${assetSection}
         alert("東京都23区内の資産所在区を選択してから、第26号様式用の転記資料を作成してください。");
         return;
       }
+      if (window.matchMedia("(max-width: 620px)").matches && !mobileFormalNoticeShown) {
+        const continueOnMobile = confirm("正式帳票作成では多数の入力項目と印刷レイアウトの確認が必要です。安全な最終確認のためPC利用を推奨します。このスマホで入力を続けますか？");
+        if (!continueOnMobile) return;
+        mobileFormalNoticeShown = true;
+      }
       document.querySelector("#assetLocationDetail").value ||= document.querySelector("#municipality").value.trim();
       document.querySelector("#submissionOffice").value = officialSubmissionOffice();
       switchDeclarationStep("owner");
@@ -2142,12 +2516,14 @@ ${assetSection}
       if (!assetProgress || !profileProgress || !reviewProgress) return;
       const taxableCount = assets.filter(asset => asset.taxable).length;
       assetProgress.className = `work-status-item${assets.length ? " complete" : ""}`;
-      assetProgress.querySelector("span:last-child").textContent = assets.length
+      assetProgress.querySelector(".work-status-text").textContent = assets.length
         ? `資産登録済み ${assets.length}件（対象候補${taxableCount}件）`
         : "資産未登録";
+      assetProgress.querySelector(".work-status-badge").textContent = assets.length ? "完了済" : "未完了";
       const profileComplete = isDeclarationProfileComplete();
       profileProgress.className = `work-status-item${profileComplete ? " complete" : ""}`;
-      profileProgress.querySelector("span:last-child").textContent = profileComplete ? "基本情報入力済み" : "基本情報未入力";
+      profileProgress.querySelector(".work-status-text").textContent = profileComplete ? "基本情報入力済み" : "基本情報未入力";
+      profileProgress.querySelector(".work-status-badge").textContent = profileComplete ? "完了済" : "未完了";
       const increaseCount = assets.filter(asset => asset.taxable && !asset.disposed && isIncreaseAssetForYear(asset, targetYear)).length;
       const decreaseCount = assets.filter(asset => asset.taxable && asset.disposed && Number(asset.disposed.slice(0, 4)) === targetYear - 1).length;
       const reviewCount = assets.filter(asset => asset.reviewRequired).length +
@@ -2157,7 +2533,8 @@ ${assetSection}
         (increaseCount > 20 ? 1 : 0) +
         (decreaseCount > 20 ? 1 : 0);
       reviewProgress.className = `work-status-item${reviewCount ? " warning" : " complete"}`;
-      reviewProgress.querySelector("span:last-child").textContent = reviewCount ? `要確認事項あり ${reviewCount}件` : "要確認事項なし";
+      reviewProgress.querySelector(".work-status-text").textContent = reviewCount ? `要確認事項あり ${reviewCount}件` : "要確認事項なし";
+      reviewProgress.querySelector(".work-status-badge").textContent = reviewCount ? "要確認" : "完了済";
     }
 
     function fillDeclarationSample() {
@@ -2647,6 +3024,7 @@ ${manualDecreaseDetails ? `<div class="notice"><b>一部減少・修正等は取
 
       renderYearlyLineChart(taxableAssets);
       updateWorkProgress();
+      scheduleDraftSave();
     }
 
     function renderYearlyLineChart(taxableAssets) {
