@@ -245,24 +245,43 @@
     .hero-tags > span { border-radius: 999px; background: rgba(255,255,255,.12); padding: 3px 9px; font-size: 11px; }
 
     .deadline {
-      background: #d7e0e7; padding: 8px 22px; display: flex;
+      border: 1px solid rgba(120,148,168,.38);
+      background:
+        linear-gradient(180deg, rgba(49,91,125,.14) 0 17px, transparent 17px),
+        radial-gradient(circle at 88% 18%, rgba(85,145,174,.22), transparent 34%),
+        linear-gradient(118deg, rgba(255,255,255,.96) 0%, rgba(235,243,247,.96) 58%, rgba(215,231,239,.94) 100%);
+      padding: 8px 22px; display: flex;
       flex-direction: column; justify-content: center; gap: 1px;
       isolation: isolate;
+      box-shadow: 0 12px 30px rgba(38,72,94,.12), inset 0 1px 0 rgba(255,255,255,.92);
     }
     .deadline::before {
-      content: ""; position: absolute; z-index: -1; width: 150px; height: 150px;
-      right: -36px; top: -65px; border-radius: 50%;
-      border: 24px solid rgba(49,91,125,.10);
+      content: ""; position: absolute; z-index: -1; inset: 0;
+      background:
+        radial-gradient(circle at 72% 8px, #f7fafc 0 3px, #56778d 3.5px 5px, transparent 5.5px),
+        radial-gradient(circle at 84% 8px, #f7fafc 0 3px, #56778d 3.5px 5px, transparent 5.5px),
+        radial-gradient(circle at 96% 8px, #f7fafc 0 3px, #56778d 3.5px 5px, transparent 5.5px),
+        linear-gradient(rgba(49,91,125,.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(49,91,125,.10) 1px, transparent 1px);
+      background-size: auto, auto, auto, 20px 18px, 20px 18px;
+      background-position: 0 0, 0 0, 0 0, calc(100% - 136px) 24px, calc(100% - 136px) 24px;
+      mask-image: linear-gradient(90deg, transparent 48%, #000 72%, #000 100%);
     }
-    .deadline::after {
-      content: "01"; position: absolute; z-index: -1; right: 17px; bottom: -22px;
-      color: rgba(49,91,125,.08); font-size: 88px; line-height: 1; font-weight: 900;
-      letter-spacing: -.08em;
+    .deadline > * { position: relative; z-index: 1; transform: translateY(5px); }
+    .deadline > div {
+      width: fit-content; max-width: calc(100% - 104px); padding: 4px 9px;
+      border-radius: 9px 9px 0 0;
+      background: transparent;
     }
-    .deadline .eyebrow { font-size: 14px; color: var(--green-dark); opacity: 1; }
-    .deadline .date { font-size: 27px; font-weight: 900; letter-spacing: -.05em; margin: 1px 0 0; }
-    .deadline p { color: #465966; line-height: 1.2; font-size: 11px; margin: 0; white-space: nowrap; }
-    .deadline .official-link { margin-top: 1px; font-size: 11px; }
+    .deadline .eyebrow { font-size: 13px; color: #274f69; opacity: 1; letter-spacing: .04em; line-height: 1.05; }
+    .deadline .date { color: #172f41; font-size: 26px; font-weight: 900; line-height: 1; letter-spacing: -.05em; margin: -1px 0 0; }
+    .deadline p { color: #405765; line-height: 1.2; font-size: 11px; margin: 0; white-space: nowrap; }
+    .deadline .official-link {
+      align-self: flex-start; max-width: calc(100% - 104px); margin-top: -1px; padding: 0 9px;
+      border-radius: 0 0 9px 9px;
+      background: transparent;
+      font-size: 11px; line-height: 1.2;
+    }
     .official-link { color: var(--green-dark); font-weight: 800; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; }
@@ -900,6 +919,8 @@
       .document-button, .forms-button { padding: 2px 3px; font-size: clamp(9.5px, 2.8vw, 11.33px); line-height: 1.1; }
       .logout-button { border-radius: 9px; font-size: 11.33px; }
       .hero-main, .deadline { border-radius: 20px; padding: 9px 14px; }
+      .deadline > div, .deadline .official-link { max-width: calc(100% - 58px); }
+      .deadline > div { padding: 4px 7px; }
       .hero-main {
         background:
           linear-gradient(90deg, rgba(35,48,59,.98), rgba(35,48,59,.82)),
