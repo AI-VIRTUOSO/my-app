@@ -22,6 +22,8 @@
       --brand-gold-light: #fff0a6;
       --brand-gold: #e6bd4b;
       --brand-gold-dark: #9a6817;
+      --blue-violet: #6657c8;
+      --blue-violet-soft: rgba(102,87,200,.16);
       --slate: #46545f;
       --slate-soft: #70808c;
       --amber: #b87503;
@@ -47,30 +49,29 @@
         inset 0 1px 0 rgba(255,255,255,.58),
         0 2px 0 rgba(31,49,64,.16),
         0 5px 12px rgba(31,49,64,.13);
-      transition: transform .16s ease, box-shadow .16s ease, filter .16s ease, background-color .16s ease;
+      transition: box-shadow .2s ease, filter .2s ease, background-color .2s ease, border-color .2s ease;
     }
     button:not(.remove):not(.dialog-close):not(.step-tab):hover:not(:disabled) {
-      transform: translateY(-1px);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.68),
-        0 3px 0 rgba(31,49,64,.17),
-        0 7px 15px rgba(31,49,64,.17);
-      filter: brightness(1.02);
+        inset 0 1px 0 rgba(255,255,255,.62),
+        0 2px 0 rgba(31,49,64,.15),
+        0 6px 13px rgba(31,49,64,.14);
+      filter: brightness(1.01);
     }
     button:not(.remove):not(.dialog-close):not(.step-tab):active:not(:disabled) {
-      transform: translateY(1px);
       box-shadow:
-        inset 0 2px 4px rgba(31,49,64,.16),
-        0 1px 0 rgba(31,49,64,.13),
-        0 2px 5px rgba(31,49,64,.1);
+        inset 0 1px 3px rgba(31,49,64,.13),
+        0 1px 0 rgba(31,49,64,.12),
+        0 3px 7px rgba(31,49,64,.1);
+      filter: brightness(.99);
     }
     button:disabled { box-shadow: none; }
     .step-tab {
       box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 1px 3px rgba(31,49,64,.08);
-      transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
+      transition: box-shadow .2s ease, background-color .2s ease;
     }
-    .step-tab:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(31,49,64,.12); }
-    .step-tab:active:not(:disabled) { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(31,49,64,.12); }
+    .step-tab:hover:not(:disabled) { box-shadow: 0 2px 6px rgba(31,49,64,.1); }
+    .step-tab:active:not(:disabled) { box-shadow: inset 0 1px 3px rgba(31,49,64,.1); }
     body.auth-locked > :not(#authGate):not(script) { display: none !important; }
     .auth-gate {
       min-height: 100vh; display: grid; place-items: center; padding: 24px;
@@ -461,7 +462,10 @@
       background: #fbfcfa; color: var(--ink); padding: 4px 12px; outline: none;
       transition: .2s border, .2s box-shadow;
     }
-    input:focus, select:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(52,127,120,.12); }
+    input:focus, select:focus {
+      border-color: var(--blue-violet);
+      box-shadow: 0 0 0 1px var(--blue-violet-soft);
+    }
     .helper { display: block; color: var(--muted); font-size: 10px; margin-top: 1px; line-height: 1.2; }
     .helper.compact { margin-top: 2px; font-size: 11px; line-height: 1.15; }
     .acquired-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 7px; }
@@ -485,9 +489,9 @@
     .add-button {
       width: 100%; border: 0; border-radius: 13px; padding: 7px;
       margin-top: 4px; background: var(--green); color: white; font-weight: 800;
-      box-shadow: 0 9px 20px rgba(52,127,120,.22); transition: .2s transform, .2s background;
+      box-shadow: 0 9px 20px rgba(52,127,120,.22); transition: .2s background, .2s box-shadow;
     }
-    .add-button:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .add-button:hover { background: var(--green-dark); }
 
     .asset-list { display: grid; gap: 4px; }
     .asset-tools {
@@ -555,19 +559,19 @@
     .chart-legend { display: flex; gap: 12px; color: var(--muted); font-size: 9px; font-weight: 800; }
     .chart-legend span { display: inline-flex; gap: 5px; align-items: center; }
     .chart-legend i { width: 14px; height: 3px; border-radius: 99px; background: #347f78; }
-    .chart-legend .tax i { background: #c47724; }
+    .chart-legend .tax i { background: var(--blue-violet); }
     .line-chart { display: block; width: 100%; min-width: 640px; height: auto; }
     .line-chart-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
     .chart-grid { stroke: #e5ebef; stroke-width: 1; }
     .chart-axis { fill: #6a7883; font-size: 9px; }
     .chart-axis-title { fill: #347f78; font-size: 10px; font-weight: 800; }
-    .chart-axis-title.tax { fill: #c47724; }
+    .chart-axis-title.tax { fill: var(--blue-violet); }
     .chart-year { fill: #6a7883; font-size: 8px; }
     .evaluation-area { fill: url(#evaluationArea); }
     .evaluation-line { fill: none; stroke: #347f78; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-    .tax-line { fill: none; stroke: #c47724; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .tax-line { fill: none; stroke: var(--blue-violet); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
     .evaluation-point { fill: #fff; stroke: #347f78; stroke-width: 2; }
-    .tax-point { fill: #fff; stroke: #c47724; stroke-width: 2; }
+    .tax-point { fill: #fff; stroke: var(--blue-violet); stroke-width: 2; }
     .chart-empty { padding: 24px 15px; text-align: center; color: var(--muted); font-size: 11px; }
 
     .notice {
@@ -812,10 +816,10 @@
     }
     .layout .panel:first-child .advanced-fields summary { font-size: 12px; line-height: 1.35; }
     .layout .panel:first-child .result-preview {
-      margin-top: 11px; padding: 8px 12px; border-radius: 12px;
+      margin-top: 6px; padding: 4px 11px; border-radius: 11px;
     }
-    .layout .panel:first-child .result-preview strong { font-size: 12px; line-height: 1.35; }
-    .layout .panel:first-child .result-preview p { margin-top: 2px; font-size: 10.5px; line-height: 1.3; }
+    .layout .panel:first-child .result-preview strong { display: block; font-size: 12px; line-height: 1.2; }
+    .layout .panel:first-child .result-preview p { margin-top: 1px; font-size: 10.5px; line-height: 1.2; }
     .step-tabs {
       display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
       margin-bottom: 12px; padding: 4px; border-radius: 14px; background: #edf2f6;
@@ -833,7 +837,7 @@
     .stat-note, .notice { font-size: 12px; }
     .chart-axis, .chart-year { font-size: 11px; }
     button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible {
-      outline: 3px solid #c47724; outline-offset: 3px;
+      outline: 1px solid var(--blue-violet); outline-offset: 2px;
     }
     .deadline { padding-top: 6px; padding-bottom: 6px; }
 
@@ -2346,9 +2350,10 @@
       assets = [
         { id:"sample1", name:"太陽光発電設備", category:"機械及び装置", icon:"ST", price:1920000, quantity:1, acquired:"2024-06", life:17, assetType:"2", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true },
         { id:"sample2", name:"ASUS Pro WS WRX90E-SAGE SE", category:"パソコン（サーバー用を除く）", icon:"PC", price:242800, quantity:1, acquired:"2026-01", life:4, assetType:"6", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true },
-        { id:"sample3", name:"Ryzen Threadripper PRO 9975WX BOX", category:"パソコン（サーバー用を除く）", icon:"PC", price:788000, quantity:1, acquired:"2025-01", life:4, assetType:"6", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true },
-        { id:"sample4", name:"NEMIX RAM 256GB DDR5 ECC RDIMM KIT", category:"パソコン（サーバー用を除く）", icon:"PC", price:989000, quantity:1, acquired:"2025-01", life:4, assetType:"6", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true },
-        { id:"sample5", name:"NVIDIA RTX PRO 6000 Blackwell Max-Q", category:"パソコン（サーバー用を除く）", icon:"PC", price:1645000, quantity:1, acquired:"2025-01", life:4, assetType:"6", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true }
+        { id:"sample3", name:"Ryzen Threadripper PRO 9975WX BOX", category:"パソコン（サーバー用を除く）", icon:"PC", price:788000, quantity:1, acquired:"2026-01", life:4, assetType:"6", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true },
+        { id:"sample4", name:"NEMIX RAM 256GB DDR5 ECC RDIMM KIT", category:"パソコン（サーバー用を除く）", icon:"PC", price:989000, quantity:1, acquired:"2026-01", life:4, assetType:"6", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true },
+        { id:"sample5", name:"NVIDIA RTX PRO 6000 Blackwell Max-Q ①", category:"パソコン（サーバー用を除く）", icon:"PC", price:1645000, quantity:1, acquired:"2026-02", life:4, assetType:"6", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true },
+        { id:"sample6", name:"NVIDIA RTX PRO 6000 Blackwell Max-Q ②", category:"パソコン（サーバー用を除く）", icon:"PC", price:1710000, quantity:1, acquired:"2026-04", life:4, assetType:"6", increaseReason:"新品取得", ownershipStatus:"owned", usage:"business", treatment:"individual", decreaseReason:"", reviewRequired:false, taxable:true }
       ];
       render();
     }
@@ -2406,7 +2411,7 @@
   body { margin: 0; color: #111; font-family: "Meiryo UI", "Hiragino Sans", sans-serif; font-size: 11px; line-height: 1.5; }
   .tools { margin-bottom: 10px; }
   .tools button { border: 1px solid #aebbc4; border-radius: 5px; padding: 8px 14px; background: #edf1f3; color: #29404f; font-weight: bold; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 0 rgba(31,49,64,.14), 0 5px 12px rgba(31,49,64,.13); }
-  .tools button:active { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(31,49,64,.18), 0 1px 3px rgba(31,49,64,.12); }
+  .tools button:active { box-shadow: inset 0 1px 3px rgba(31,49,64,.14), 0 2px 5px rgba(31,49,64,.1); }
   .notice { margin-bottom: 13px; padding: 8px 10px; border: 1px solid #9cabb7; background: #eef3f6; font-size: 9px; }
   h1 { margin: 5px 0 3px; text-align: center; font-size: 20px; letter-spacing: .08em; }
   .destination { margin-bottom: 12px; text-align: right; font-size: 12px; }
@@ -2657,9 +2662,9 @@ ${assetSection}
   .tools { max-width: 210mm; margin: 0 auto 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .tool-actions { display: flex; gap: 8px; align-items: center; }
   .tools strong { font-size: 14.33px; }
-  .tools button { border: 1px solid #aebbc4; border-radius: 7px; padding: 8px 14px; background: #edf1f3; color: #29404f; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 0 rgba(31,49,64,.14), 0 5px 12px rgba(31,49,64,.13); transition: transform .16s ease, box-shadow .16s ease; }
-  .tools button:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 3px 0 rgba(31,49,64,.2), 0 7px 15px rgba(31,49,64,.22); }
-  .tools button:active { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(31,49,64,.18), 0 1px 3px rgba(31,49,64,.12); }
+  .tools button { border: 1px solid #aebbc4; border-radius: 7px; padding: 8px 14px; background: #edf1f3; color: #29404f; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 0 rgba(31,49,64,.14), 0 5px 12px rgba(31,49,64,.13); transition: box-shadow .2s ease, filter .2s ease; }
+  .tools button:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 2px 0 rgba(31,49,64,.16), 0 6px 13px rgba(31,49,64,.16); filter: brightness(1.01); }
+  .tools button:active { box-shadow: inset 0 1px 3px rgba(31,49,64,.14), 0 2px 5px rgba(31,49,64,.1); filter: brightness(.99); }
   .tools .close-preview { background: #fff0f0; color: #963535; border: 1px solid #d49a9a; }
   .page { position: relative; width: 210mm; min-height: 297mm; margin: auto; padding: 12mm; overflow: hidden; background: white; box-shadow: 0 8px 30px rgba(24,43,58,.2); }
   .watermark { position: absolute; left: 50%; transform: translateX(-50%) rotate(-25deg); color: rgba(190,45,45,.12); font-size: 54pt; font-weight: 900; letter-spacing: .15em; white-space: nowrap; pointer-events: none; }
@@ -2817,7 +2822,7 @@ ${assetSection}
   .number { text-align: right; white-space: nowrap; }
   .footer { display: flex; justify-content: space-between; gap: 20px; margin-top: 12px; color: #526575; }
   .no-print { margin-bottom: 12px; padding: 9px 15px; border: 1px solid #aebbc4; border-radius: 6px; background: #edf1f3; color: #29404f; font-weight: bold; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 0 rgba(31,49,64,.14), 0 5px 12px rgba(31,49,64,.13); }
-  .no-print:active { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(31,49,64,.18), 0 1px 3px rgba(31,49,64,.12); }
+  .no-print:active { box-shadow: inset 0 1px 3px rgba(31,49,64,.14), 0 2px 5px rgba(31,49,64,.1); }
   @media print { .no-print { display: none; } }
 </style></head><body>
 <button class="no-print" onclick="window.print()">印刷・PDF保存</button>
