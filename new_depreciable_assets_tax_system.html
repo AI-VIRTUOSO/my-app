@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src https://identitytoolkit.googleapis.com http://127.0.0.1:8765; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src https://identitytoolkit.googleapis.com https://ipapi.co http://127.0.0.1:8765; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>東京都中央区・第26号様式対応 償却資産申告支援システム | TSUMUGI Asset</title>
   <link rel="icon" href="tsumugi-asset-icon.svg" type="image/svg+xml">
   <style>
@@ -394,6 +394,7 @@
     }
     .term-tooltip {
       position: fixed; z-index: 10000; display: none;
+      inset: auto; margin: 0;
       width: min(330px, calc(100vw - 24px)); padding: 11px 13px;
       border: 1px solid rgba(255,255,255,.18); border-radius: 11px;
       background: #203746; color: white; font-size: 12px; font-weight: 500; line-height: 1.6;
@@ -600,6 +601,37 @@
     .dialog-head p { margin: 4px 0 0; color: rgba(255,255,255,.72); font-size: 11px; }
     .dialog-close { border: 0; background: transparent; color: white; font-size: 22px; }
     .dialog-body { padding: 18px 20px; overflow: auto; max-height: calc(100vh - 150px); }
+    #loginInfoDialog { width: min(620px, calc(100vw - 28px)); }
+    .login-info-current {
+      margin-bottom: 14px; padding: 12px 14px; border: 1px solid #c9dedb;
+      border-radius: 13px; background: var(--green-soft);
+    }
+    .login-info-label { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .06em; }
+    .login-info-id { margin-top: 3px; color: var(--green-dark); font-size: 15px; font-weight: 900; overflow-wrap: anywhere; }
+    .login-history-title { margin: 0 0 7px; font-size: 13px; }
+    .login-history-list { display: grid; gap: 6px; margin-bottom: 12px; }
+    .login-history-row {
+      display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 9px; align-items: center;
+      padding: 8px 10px; border: 1px solid var(--line); border-radius: 11px; background: #fbfcfd;
+    }
+    .login-history-number {
+      width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%;
+      background: var(--slate); color: white; font-size: 10px; font-weight: 900;
+    }
+    .login-history-email { min-width: 0; font-size: 11px; font-weight: 800; overflow-wrap: anywhere; }
+    .login-history-meta {
+      display: flex; flex-wrap: wrap; gap: 3px 9px; margin-top: 3px;
+      color: var(--muted); font-size: 10px; line-height: 1.35;
+    }
+    .login-history-meta span::before { color: var(--green); font-weight: 900; }
+    .login-history-os::before { content: "OS："; }
+    .login-history-country::before { content: "アクセス国："; }
+    .login-history-time { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .login-history-empty {
+      padding: 18px; border: 1px dashed var(--line); border-radius: 11px;
+      color: var(--muted); font-size: 11px; text-align: center;
+    }
+    .login-info-note { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
     .official-form-note {
       margin-bottom: 14px; padding: 10px 12px; border-radius: 12px;
       background: var(--amber-soft); color: #6b5625; font-size: 11px; line-height: 1.5;
@@ -812,7 +844,7 @@
     }
     .layout .panel:first-child .usage-switch label {
       display: flex; align-items: center; justify-content: center;
-      font-size: 12.33px; line-height: 1.2;
+      font-size: 13.33px; line-height: 1.2;
     }
     .layout .panel:first-child .advanced-fields summary { font-size: 12px; line-height: 1.35; }
     .layout .panel:first-child .result-preview {
@@ -826,7 +858,7 @@
     }
     .step-tab {
       min-height: 40px; border: 0; border-radius: 11px; background: transparent;
-      color: var(--muted); font-size: 13px; font-weight: 800;
+      color: var(--muted); font-size: 14px; font-weight: 800;
     }
     .step-tab.active { background: white; color: var(--green-dark); box-shadow: 0 3px 10px rgba(31,49,64,.08); }
     .step-tab-panel[hidden] { display: none; }
@@ -1018,7 +1050,7 @@
       .layout .panel:first-child .acquired-grid { gap: 4px; }
       .layout .panel:first-child .usage-switch { gap: 4px; }
       .layout .panel:first-child .usage-switch label {
-        min-height: 30px; padding: 5px 2px; font-size: 11.33px; line-height: 1.1;
+        min-height: 30px; padding: 5px 2px; font-size: 12.33px; line-height: 1.1;
       }
       .layout .panel:first-child .helper,
       .layout .panel:first-child .helper.compact {
@@ -1069,6 +1101,8 @@
         padding: 4px 9px; border-radius: 999px; font-size: 11px; line-height: 1.2;
       }
       .other-actions-menu #targetYear { padding-left: 9px; padding-right: 26px; font-size: 11px; }
+      .login-history-row { grid-template-columns: 24px minmax(0, 1fr); gap: 7px; }
+      .login-history-time { grid-column: 2; white-space: normal; }
       .remove { width: 32px; min-height: 40px; }
       .lower, .meter-wrap, .yearly-chart { width: 100%; max-width: 100%; }
       .meter-wrap, .yearly-chart { padding-left: 9px; padding-right: 9px; }
@@ -1143,6 +1177,7 @@
           <summary>その他の操作</summary>
           <div class="other-actions-menu">
             <button class="forms-button" id="openOfficialForms" type="button">関連様式 転記資料</button>
+            <button class="forms-button" id="openLoginInfo" type="button">ログイン情報</button>
             <button class="logout-button" id="logoutButton" type="button">ログアウト</button>
           </div>
         </details>
@@ -1338,6 +1373,25 @@
     </div>
   </main>
 
+  <dialog class="form-dialog" id="loginInfoDialog">
+    <div class="dialog-head">
+      <div><h2>ログイン情報</h2><p>現在のログインIDと、この端末に記録された直近5回のログイン時刻です。</p></div>
+      <button class="dialog-close" id="closeLoginInfo" type="button" aria-label="閉じる">×</button>
+    </div>
+    <div class="dialog-body">
+      <div class="login-info-current">
+        <div class="login-info-label">現在ログイン中のID</div>
+        <div class="login-info-id" id="currentLoginId">確認中...</div>
+      </div>
+      <h3 class="login-history-title">直近5回のログイン記録</h3>
+      <div class="login-history-list" id="loginHistoryList"></div>
+      <p class="login-info-note">この履歴は現在の端末・ブラウザ内だけに保存されます。パスワードや認証トークンは履歴へ保存しません。アクセス国の判定時のみ外部サービスへ接続します。ブラウザのデータを削除すると履歴も消去されます。</p>
+      <div class="dialog-actions">
+        <button class="primary" id="closeLoginInfoBottom" type="button">閉じる</button>
+      </div>
+    </div>
+  </dialog>
+
   <dialog class="form-dialog" id="officialFormsDialog">
     <div class="dialog-head">
       <div><h2>固定資産税 関連様式の転記資料作成</h2><p>東京都主税局の23区共通様式へ転記するための確認資料を作成します。</p></div>
@@ -1460,6 +1514,8 @@
       const reset = document.querySelector("#authReset");
       const message = document.querySelector("#authMessage");
       const tokenKey = "assetTaxFirebaseIdToken";
+      const loginHistoryKey = "tsumugiAssetLoginHistory";
+      let currentLoginEmail = "";
 
       function isAllowedEmail(email) {
         const allowed = Array.isArray(config.allowedEmails) ? config.allowedEmails : [];
@@ -1471,9 +1527,126 @@
           sessionStorage.removeItem(tokenKey);
           throw new Error("このIDには利用権限がありません。");
         }
+        currentLoginEmail = email;
         message.textContent = "";
         document.body.classList.remove("auth-locked");
         gate.hidden = true;
+      }
+
+      function readLoginHistory() {
+        try {
+          const history = JSON.parse(localStorage.getItem(loginHistoryKey) || "[]");
+          return Array.isArray(history)
+            ? history.sort((a, b) => String(b.loggedInAt || "").localeCompare(String(a.loggedInAt || ""))).slice(0, 5)
+            : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveLoginHistory(history) {
+        try {
+          localStorage.setItem(loginHistoryKey, JSON.stringify(history.slice(0, 5)));
+        } catch {
+          // Private browsing or storage restrictions may prevent local history storage.
+        }
+      }
+
+      function detectOperatingSystem() {
+        const platform = navigator.userAgentData?.platform || navigator.platform || "";
+        const userAgent = navigator.userAgent || "";
+        if (/Windows/i.test(platform) || /Windows NT/i.test(userAgent)) return "Windows";
+        if (/Mac/i.test(platform) || /Macintosh|Mac OS X/i.test(userAgent)) return "macOS";
+        if (/iPhone|iPad|iPod/i.test(userAgent)) return "iOS";
+        if (/Android/i.test(userAgent)) return "Android";
+        if (/Linux/i.test(platform) || /Linux/i.test(userAgent)) return "Linux";
+        return platform || "取得できません";
+      }
+
+      async function detectAccessCountry() {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 4000);
+        try {
+          const response = await fetch("https://ipapi.co/country/", {
+            method: "GET", cache: "no-store", signal: controller.signal
+          });
+          if (!response.ok) throw new Error("Country lookup failed");
+          const countryCode = (await response.text()).trim().toUpperCase();
+          if (!/^[A-Z]{2}$/.test(countryCode)) return "取得できません";
+          try {
+            return new Intl.DisplayNames(["ja"], { type: "region" }).of(countryCode) || countryCode;
+          } catch {
+            return countryCode;
+          }
+        } catch {
+          return "取得できません";
+        } finally {
+          clearTimeout(timeout);
+        }
+      }
+
+      async function recordLogin(email) {
+        const loggedInAt = new Date().toISOString();
+        const os = detectOperatingSystem();
+        const history = readLoginHistory();
+        history.unshift({ email, loggedInAt, os, country: "確認中..." });
+        saveLoginHistory(history);
+        const country = await detectAccessCountry();
+        const latestHistory = readLoginHistory();
+        const entry = latestHistory.find(item => item.email === email && item.loggedInAt === loggedInAt);
+        if (entry) entry.country = country;
+        saveLoginHistory(latestHistory);
+        if (document.querySelector("#loginInfoDialog").open) renderLoginInfo();
+      }
+
+      function formatLoginTime(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "日時を確認できません";
+        return new Intl.DateTimeFormat("ja-JP", {
+          year: "numeric", month: "2-digit", day: "2-digit",
+          hour: "2-digit", minute: "2-digit", second: "2-digit"
+        }).format(date);
+      }
+
+      function renderLoginInfo() {
+        document.querySelector("#currentLoginId").textContent = currentLoginEmail || "ログインIDを確認できません";
+        const list = document.querySelector("#loginHistoryList");
+        const history = readLoginHistory();
+        list.replaceChildren();
+        if (!history.length) {
+          const empty = document.createElement("div");
+          empty.className = "login-history-empty";
+          empty.textContent = "この端末にはログイン履歴がまだありません。";
+          list.append(empty);
+          return;
+        }
+        history.forEach((entry, index) => {
+          const row = document.createElement("div");
+          row.className = "login-history-row";
+          const number = document.createElement("span");
+          number.className = "login-history-number";
+          number.textContent = String(index + 1);
+          const detail = document.createElement("div");
+          const email = document.createElement("div");
+          email.className = "login-history-email";
+          email.textContent = entry.email || "ID不明";
+          const meta = document.createElement("div");
+          meta.className = "login-history-meta";
+          const os = document.createElement("span");
+          os.className = "login-history-os";
+          os.textContent = entry.os || "記録なし";
+          const country = document.createElement("span");
+          country.className = "login-history-country";
+          country.textContent = entry.country || "記録なし";
+          meta.append(os, country);
+          detail.append(email, meta);
+          const time = document.createElement("time");
+          time.className = "login-history-time";
+          time.dateTime = entry.loggedInAt || "";
+          time.textContent = formatLoginTime(entry.loggedInAt);
+          row.append(number, detail, time);
+          list.append(row);
+        });
       }
 
       async function firebaseRequest(action, body) {
@@ -1537,7 +1710,9 @@
           const result = await firebaseRequest("signInWithPassword", { email, password, returnSecureToken: true });
           if (!isAllowedEmail(result.email || email)) throw new Error("このIDには利用権限がありません。");
           sessionStorage.setItem(tokenKey, result.idToken);
-          unlock(result.email || email);
+          const authenticatedEmail = result.email || email;
+          unlock(authenticatedEmail);
+          void recordLogin(authenticatedEmail);
           form.reset();
         } catch (error) {
           message.textContent = error.message;
@@ -1568,6 +1743,14 @@
         sessionStorage.removeItem(tokenKey);
         location.reload();
       });
+      document.querySelector("#openLoginInfo").addEventListener("click", () => {
+        renderLoginInfo();
+        document.querySelector(".other-actions").open = false;
+        document.querySelector("#loginInfoDialog").showModal();
+      });
+      const closeLoginInfo = () => document.querySelector("#loginInfoDialog").close();
+      document.querySelector("#closeLoginInfo").addEventListener("click", closeLoginInfo);
+      document.querySelector("#closeLoginInfoBottom").addEventListener("click", closeLoginInfo);
 
       restoreSession();
     })();
@@ -1900,6 +2083,7 @@
         tooltip.id = "termTooltip";
         tooltip.className = "term-tooltip";
         tooltip.setAttribute("role", "tooltip");
+        tooltip.setAttribute("popover", "manual");
         document.body.appendChild(tooltip);
       }
       Object.entries(help).forEach(([id, text]) => {
@@ -1952,6 +2136,16 @@
       activeTermHelp = icon;
       icon.setAttribute("aria-expanded", "true");
       tooltip.textContent = icon.dataset.help;
+      const tooltipParent = icon.closest("dialog") || document.body;
+      if (tooltip.parentElement !== tooltipParent) {
+        if (typeof tooltip.hidePopover === "function" && tooltip.matches(":popover-open")) {
+          try { tooltip.hidePopover(); } catch {}
+        }
+        tooltipParent.appendChild(tooltip);
+      }
+      if (typeof tooltip.showPopover === "function" && !tooltip.matches(":popover-open")) {
+        try { tooltip.showPopover(); } catch {}
+      }
       tooltip.classList.add("visible");
       tooltip.style.left = "12px";
       tooltip.style.top = "12px";
@@ -1975,6 +2169,9 @@
     function hideTermTooltip() {
       const tooltip = document.querySelector("#termTooltip");
       tooltip?.classList.remove("visible");
+      if (tooltip && typeof tooltip.hidePopover === "function" && tooltip.matches(":popover-open")) {
+        try { tooltip.hidePopover(); } catch {}
+      }
       activeTermHelp?.setAttribute("aria-expanded", "false");
       activeTermHelp = null;
     }
