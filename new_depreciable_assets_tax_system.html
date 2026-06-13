@@ -508,14 +508,26 @@
       border: 1px solid var(--line); border-radius: 15px; background: #fcfdfb;
     }
     .asset-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: var(--green-soft); font-size: 20px; }
-    .asset-name { font-weight: 800; font-size: 13px; overflow-wrap: anywhere; }
-    .asset-meta { color: var(--muted); font-size: 10px; margin-top: 4px; overflow-wrap: anywhere; }
+    .asset-name { font-weight: 800; font-size: 14px; overflow-wrap: anywhere; }
+    .asset-meta { color: var(--muted); font-size: 10px; margin-top: 2px; line-height: 1.25; overflow-wrap: anywhere; }
     .asset-number { text-align: right; }
     .asset-number strong { display: block; font-size: 13px; }
     .asset-number span { color: var(--muted); font-size: 9px; }
-    .badge { display: inline-flex; margin-top: 5px; border-radius: 999px; padding: 4px 7px; font-size: 9px; font-weight: 900; }
+    .asset-status-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 7px; margin-top: 3px; }
+    .badge { display: inline-flex; margin: 0; border-radius: 999px; padding: 3px 7px; font-size: 9px; font-weight: 900; }
     .badge.on { background: var(--green-soft); color: var(--green-dark); }
     .badge.off { background: #edf0ee; color: var(--muted); }
+    .asset-usage-actions {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 3px; margin: 0;
+    }
+    .asset-usage-actions > span { color: var(--muted); font-size: 9px; font-weight: 800; }
+    .asset-usage-button {
+      min-height: 20px; border: 1px solid #c7d1d7; border-radius: 999px; padding: 1px 6px;
+      background: #f5f7f8; color: #586b78; font-size: 9px; font-weight: 800; line-height: 1.1;
+    }
+    .asset-usage-button.active {
+      border-color: var(--green-dark); background: var(--green-dark); color: white;
+    }
     .remove { border: 0; background: transparent; color: #9da8a2; font-size: 17px; padding: 4px; }
     .remove:hover { color: var(--red); }
 
@@ -814,8 +826,8 @@
     }
     .step-tab.active { background: white; color: var(--green-dark); box-shadow: 0 3px 10px rgba(31,49,64,.08); }
     .step-tab-panel[hidden] { display: none; }
-    .asset { padding: 10px 12px; }
-    .asset-meta { font-size: 11px; line-height: 1.45; }
+    .asset { padding: 7px 10px; }
+    .asset-meta { font-size: 11px; line-height: 1.25; }
     .badge { font-size: 10px; }
     .meter-note, .chart-legend, .year-result span { font-size: 11px; }
     .stat-note, .notice { font-size: 12px; }
@@ -1033,6 +1045,10 @@
       }
       .asset-icon { width: 36px; height: 36px; font-size: 15px; }
       .asset-number { display: none; }
+      .asset-status-row { gap: 3px 5px; margin-top: 2px; }
+      .asset-usage-actions { gap: 2px; }
+      .asset-usage-actions > span { flex-basis: auto; font-size: 8px; }
+      .asset-usage-button { min-height: 22px; padding: 2px 6px; font-size: 8.5px; }
       .asset-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .asset-tools input { grid-column: 1 / -1; }
       .asset-filter { width: 100%; min-width: 0; max-width: none; }
@@ -2342,6 +2358,18 @@
       render();
     }
 
+    function changeAssetUsage(id, usage) {
+      const asset = assets.find(item => item.id === id);
+      if (!asset || !["private", "business", "mixed"].includes(usage) || asset.usage === usage) return;
+      const wasPrivate = asset.usage === "private";
+      asset.usage = usage;
+      asset.taxable = usage !== "private"
+        && isTaxableOwnership(asset.ownershipStatus || "owned", asset.price)
+        && isTaxableTreatment(asset.treatment || "individual", asset.price, asset.ownershipStatus || "owned");
+      if (wasPrivate && usage !== "private") asset.increaseDeclarationYear = targetYear;
+      render();
+    }
+
     function openOfficialFormsDialog() {
       document.querySelector("#assetLocation").value ||= document.querySelector("#municipality").value.trim();
       document.querySelector("#effectiveDate").value ||= new Date().toISOString().slice(0, 10);
@@ -3005,7 +3033,7 @@ ${manualDecreaseDetails ? `<div class="notice"><b>一部減少・修正等は取
         const evaluation = evaluationForYear(asset, targetYear);
         return `<div class="asset">
           <div class="asset-icon">${asset.icon}</div>
-          <div><div class="asset-name">${escapeHtml(asset.name)}</div><div class="asset-meta">種類${asset.assetType || "6"} ・ ${asset.category} ・ ${asset.life}年 ・ ${asset.acquired.replace("-", "年")}月 ・ ${asset.increaseReason || "新品取得"}${asset.assetSite ? ` ・ ${escapeHtml(asset.assetSite)}` : ""}${asset.disposed ? ` ・ ${asset.disposed.replace("-", "年")}月全部減少（${escapeHtml(asset.decreaseReason || "事由要確認")}）` : ""}</div><span class="badge ${asset.taxable ? "on" : "off"}">${asset.taxable ? (asset.reviewRequired ? "要確認・対象候補" : asset.disposed && targetYear > Number(asset.disposed.slice(0, 4)) ? "− 減少済" : "✓ 対象候補") : "− 対象外"}</span></div>
+          <div><div class="asset-name">${escapeHtml(asset.name)}</div><div class="asset-meta">種類${asset.assetType || "6"} ・ ${asset.category} ・ ${asset.life}年 ・ ${asset.acquired.replace("-", "年")}月 ・ ${asset.increaseReason || "新品取得"}${asset.assetSite ? ` ・ ${escapeHtml(asset.assetSite)}` : ""}${asset.disposed ? ` ・ ${asset.disposed.replace("-", "年")}月全部減少（${escapeHtml(asset.decreaseReason || "事由要確認")}）` : ""}</div><div class="asset-status-row"><span class="badge ${asset.taxable ? "on" : "off"}">${asset.taxable ? (asset.reviewRequired ? "要確認・対象候補" : asset.disposed && targetYear > Number(asset.disposed.slice(0, 4)) ? "− 減少済" : "✓ 対象候補") : "− 対象外"}</span><div class="asset-usage-actions" aria-label="${escapeHtml(asset.name)}の使用目的"><span>使用目的：</span><button class="asset-usage-button${asset.usage === "private" ? " active" : ""}" type="button" aria-pressed="${asset.usage === "private"}" onclick="changeAssetUsage('${asset.id}', 'private')">私用のみ</button><button class="asset-usage-button${asset.usage === "business" ? " active" : ""}" type="button" aria-pressed="${asset.usage === "business"}" onclick="changeAssetUsage('${asset.id}', 'business')">事業専用</button><button class="asset-usage-button${asset.usage === "mixed" ? " active" : ""}" type="button" aria-pressed="${asset.usage === "mixed"}" onclick="changeAssetUsage('${asset.id}', 'mixed')">私用と兼用</button></div></div></div>
           <div class="asset-number"><strong>${yen(asset.price * asset.quantity)}</strong><span>取得価額</span></div>
           <div class="asset-number"><strong>${yen(evaluation)}</strong><span>令和${targetYear - 2018}年度評価額</span></div>
           <button class="remove" type="button" aria-label="削除" onclick="removeAsset('${asset.id}')">×</button>
